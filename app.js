@@ -1,4 +1,4 @@
-import { CURRICULUM, RAGAS, SHRUTIS, TALAS, TAMIL_SWARAS } from "./content.js?v=30";
+import { CURRICULUM, RAGAS, SHRUTIS, TALAS, TAMIL_SWARAS } from "./content.js?v=32";
 
 const state = {
   sectionId: "sarali",
@@ -55,7 +55,11 @@ const elements = {
   tempoUp: document.querySelector("#tempo-up"),
   sourceButton: document.querySelector("#source-button"),
   sourceDialog: document.querySelector("#source-dialog"),
-  dialogClose: document.querySelector("#dialog-close")
+  dialogClose: document.querySelector("#dialog-close"),
+  guideButton: document.querySelector("#guide-button"),
+  guideDialog: document.querySelector("#guide-dialog"),
+  exploreButton: document.querySelector("#explore-button"),
+  exploreDialog: document.querySelector("#explore-dialog")
 };
 
 function currentSection() {
@@ -123,7 +127,6 @@ function renderLibrary() {
   const totalLessons = CURRICULUM.reduce((sum, section) => sum + section.lessons.length, 0);
   elements.lessonCount.textContent = `${totalLessons} lessons`;
   const availableSections = CURRICULUM.filter((section) => section.status !== "next");
-  const futureSections = CURRICULUM.filter((section) => section.status === "next");
 
   const availableMarkup = availableSections.map((section) => {
     const isOpen = section.id === state.sectionId;
@@ -131,7 +134,7 @@ function renderLibrary() {
     const lessonButtons = section.lessons
       .map(
         (lesson) => `
-          <button class="lesson-button ${lesson.id === state.lessonId ? "is-active" : ""}" type="button" data-section="${section.id}" data-lesson="${lesson.id}" aria-label="${lesson.number}. ${lesson.title}" title="${lesson.title}">
+          <button class="lesson-button scope-${lesson.scope || "core"} ${lesson.id === state.lessonId ? "is-active" : ""}" type="button" data-section="${section.id}" data-lesson="${lesson.id}" aria-label="${lesson.number}. ${lesson.title}" title="${lesson.title}">
             <span>${lesson.number}</span>
             <span><strong>${lesson.title}</strong><small>${lesson.description}</small></span>
           </button>`
@@ -149,13 +152,7 @@ function renderLibrary() {
       </details>`;
   }).join("");
 
-  const futureMarkup = `
-    <div class="future-path" aria-label="Later foundation sections">
-      <span class="next-label">Next</span>
-      <small>${futureSections.map((section) => section.title.replace(" varisai", "")).join(" · ")}</small>
-    </div>`;
-
-  elements.library.innerHTML = availableMarkup + futureMarkup;
+  elements.library.innerHTML = availableMarkup;
 
   elements.library.querySelectorAll("details[data-future] summary").forEach((summary) => {
     summary.addEventListener("click", (event) => event.preventDefault());
@@ -628,6 +625,14 @@ function bindControls() {
   elements.dialogClose.addEventListener("click", () => elements.sourceDialog.close());
   elements.sourceDialog.addEventListener("click", (event) => {
     if (event.target === elements.sourceDialog) elements.sourceDialog.close();
+  });
+  elements.guideButton.addEventListener("click", () => elements.guideDialog.showModal());
+  elements.exploreButton.addEventListener("click", () => elements.exploreDialog.showModal());
+  [elements.guideDialog, elements.exploreDialog].forEach((dialog) => {
+    dialog.querySelector(".dialog-close").addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
   });
 
   elements.pageBack.addEventListener("click", () => {

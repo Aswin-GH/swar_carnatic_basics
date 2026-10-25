@@ -69,6 +69,20 @@ export const CURRICULUM_DB = {
       publisher: "karnATik",
       url: "https://www.karnatik.com/beginners.pdf",
       role: "Notation reference; teacher/pathāntaram review remains authoritative"
+    },
+    "anuradha-madhya": {
+      id: "anuradha-madhya",
+      title: "Sarali and Madhyasthayi Varishai",
+      publisher: "Anuradha Mahesh",
+      url: "https://anuradhamahesh.wordpress.com/wp-content/uploads/2010/09/01-sarali-madhyasthayi-varishai.pdf",
+      role: "Alternate, published grouping of the later Sarali patterns as Madhyasthayi"
+    },
+    "anuradha-vakra-janta": {
+      id: "anuradha-vakra-janta",
+      title: "Vakra Janta Varisai",
+      publisher: "Anuradha Mahesh",
+      url: "https://anuradhamahesh.wordpress.com/wp-content/uploads/2010/09/02-vakra-janta-varisai.pdf",
+      role: "Published notation for the extended zig-zag paired-swara sequence"
     }
   },
   schoolTracks: {
@@ -98,8 +112,7 @@ export const CURRICULUM_DB = {
     { id: "sthaayi", order: 3, title: "Melsthayi varisai", tamilTitle: "மேல்ஸ்தாயி வரிசை", description: "Upper-octave reach and return" },
     { id: "dhatu", order: 4, title: "Dhatu varisai", tamilTitle: "தாட்டு வரிசை", description: "Skipping and crossing swara patterns" },
     { id: "keezh-sthaayi", order: 5, title: "Keezh / Mandra sthayi", tamilTitle: "கீழ்ஸ்தாயி வரிசை", description: "Lower-octave reach and return" },
-    { id: "alankaram", order: 6, title: "Alankarams", tamilTitle: "அலங்காரங்கள்", description: "Patterns through the sapta tāḷas" },
-    { id: "geetham", order: 7, title: "Geethams", tamilTitle: "கீதங்கள்", description: "Simple melodies with swara and sāhitya", status: "next" }
+    { id: "alankaram", order: 6, title: "Alankarams", tamilTitle: "அலங்காரங்கள்", description: "Patterns through the sapta tāḷas" }
   ],
   lessons: [
     lesson("sarali", 1, "The complete scale", "முழு ஸ்வர வரிசை", "A clear ascent and descent through the octave.", `
@@ -149,27 +162,27 @@ export const CURRICULUM_DB = {
       s r g m | p , | g m ||
       p , , , | p , | , , ||
       g m p d | n d | p m ||
-      g m p - g | m g | r s ||`),
+      g m p - g | m g | r s ||`, { scope: "madhya-sthayi", sourceIds: ["tnjmfau-vocal-grades", "anuradha-madhya"] }),
     lesson("sarali", 11, "Upper Sa descent", "மேல் ஸ-விலிருந்து இறங்குதல்", "A descending opening joins the familiar return.", `
       S , n d | n , | d p ||
       d , p m | p , | p , ||
       g m p d | n d | p m ||
-      g m p - g | m g | r s ||`),
+      g m p - g | m g | r s ||`, { scope: "madhya-sthayi", sourceIds: ["tnjmfau-vocal-grades", "anuradha-madhya"] }),
     lesson("sarali", 12, "Repeated upper notes", "மேல் ஸ்வர இரட்டிப்புகள்", "Repeated swaras add clarity to the descent.", `
       S S n d | n n | d p ||
       d d p m | p , | p , ||
       g m p d | n d | p m ||
-      g m p - g | m g | r s ||`),
+      g m p - g | m g | r s ||`, { scope: "madhya-sthayi", sourceIds: ["tnjmfau-vocal-grades", "anuradha-madhya"] }),
     lesson("sarali", 13, "Curved movement", "வளைந்த ஸ்வர இயக்கம்", "Turning shapes prepare the ear for wider movement.", `
       s r g r | g , | g m ||
       p m p , | d p | d , ||
       m p d p | d n | d p ||
-      m p d p | m g | r s ||`),
+      m p d p | m g | r s ||`, { scope: "madhya-sthayi", sourceIds: ["tnjmfau-vocal-grades", "anuradha-madhya"] }),
     lesson("sarali", 14, "Balanced cadence", "சமநிலை நிறைவு", "Held and repeated swaras close the Sarali set.", `
       s r g m | p , | p , ||
       d d p , | m m | p , ||
       d n S , | S n | d p ||
-      S n d p | m g | r s ||`),
+      S n d p | m g | r s ||`, { scope: "madhya-sthayi", sourceIds: ["tnjmfau-vocal-grades", "anuradha-madhya"] }),
 
     lesson("janta", 1, "Double every swara", "ஒவ்வொரு ஸ்வரமும் இருமுறை", "Paired swaras rise steadily to upper Sa.", `
       s s r r | g g | m m ||
@@ -332,6 +345,47 @@ export const CURRICULUM_DB = {
       p p m m | g g | r r ||
       m , g r | , - m | g r ||
       m m g g | r r | s s ||`),
+    lesson("janta", 10, "Vakra Janta sequence", "வக்ர ஜண்டை வரிசை", "A published zig-zag sequence that carries paired swaras across the octave.", `
+      s s r s | , r | s r ||
+      g r , g | r g | g m ||
+      s s r r | g s | r s ||
+      g s r g | s r | g m ||
+      r r g r | , g | r g ||
+      m g , m | g m | m p ||
+      r r g g | m r | g r ||
+      m r g m | r g | m p ||
+      g g m g | , m | g m ||
+      p m , p | m p | p d ||
+      g g m m | p g | m g ||
+      p g m p | g m | p d ||
+      m m p m | , p | m p ||
+      d p , d | p d | d n ||
+      m m p p | d m | p m ||
+      d m p d | m p | d n ||
+      p p d p | , d | p d ||
+      n d , n | d n | n S ||
+      p p d d | n p | d p ||
+      n p d n | p d | n S ||
+      S S n S | , n | S n ||
+      d n , d | n d | d p ||
+      S S n n | d S | n S ||
+      d S n d | S n | d p ||
+      n n d n | , d | n d ||
+      p d , p | d p | p m ||
+      n n d d | p n | d n ||
+      p n d p | n d | p m ||
+      d d p d | , p | d p ||
+      m p , m | p m | m g ||
+      d d p p | m d | p d ||
+      m d p m | d p | m g ||
+      p p m p | , m | p m ||
+      g m , g | m g | g r ||
+      p p m m | g p | m p ||
+      g p m g | p m | g r ||
+      m m g m | , g | m g ||
+      r g , r | g r | r s ||
+      m m g g | r m | g m ||
+      r m g r | m g | r s ||`, { scope: "vakra-janta", sourceIds: ["anuradha-vakra-janta"] }),
 
     lesson("sthaayi", 1, "Meet upper Ri", "மேல் ரி அறிமுகம்", "Rise through upper Sa to Ri, then return steadily.", `
       s r g m | p d | n S ||

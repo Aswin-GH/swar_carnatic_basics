@@ -23,7 +23,7 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=30" />
+    <link rel="stylesheet" href="./styles.css?v=32" />
   </head>
   <body>
     <div class="mobile-note" role="status">
@@ -64,6 +64,8 @@
           <div class="lesson-library" id="lesson-library"></div>
 
           <div class="source-tools">
+            <button class="mini-tool" id="guide-button" type="button"><strong>Guide</strong><small>How to begin</small></button>
+            <button class="mini-tool" id="explore-button" type="button"><strong>Explore</strong><small>Rāga · Tāḷa</small></button>
             <button class="source-link" id="source-button" type="button">
               <img class="source-logo" src="./assets/swar-author.png" alt="" />
               <span><strong>Curriculum by Swar</strong><small>Sources and teaching choices</small></span>
@@ -205,9 +207,9 @@
         teaching, while keeping room for a teacher's preferred order and pathāntaram.
       </p>
       <ul>
-        <li>The foundation contains 14 Sarali, 9 Janta, 5 Melsthayi, 2 core Dhatu varisais plus one extended sequence, 5 Keezh / Mandra-sthayi varisais and the 7 canonical sapta-tāḷa alankarams.</li>
+        <li>The foundation contains 14 Sarali, 9 core Janta plus one published Vakra Janta sequence, 5 Melsthayi, 2 core Dhatu varisais plus one extended sequence, 5 Keezh / Mandra-sthayi varisais and the 7 canonical sapta-tāḷa alankarams.</li>
         <li>Tamil Nadu Grade 1 specifies Sarali, Janta and Melsthayi in three speeds.</li>
-        <li>Grade 2 introduces Dhattu, Keezh-sthayi, alankarams and geethams.</li>
+        <li>Grade 2 introduces Dhattu, Keezh-sthayi and alankarams before the composition stage; this app intentionally stops there.</li>
         <li>Māyāmāḷavagowla and Ādi tāḷam are the initial defaults, not permanent restrictions.</li>
         <li>The playable sequences follow the published karnATik beginner notation; Tamil presentation and audio are derived from the same swara records. Commas are continuation beats: Sustain holds one sound across them, while Sustain off releases early into silence.</li>
         <li>A teacher's pathāntaram remains authoritative where a sequence or pronunciation differs.</li>
@@ -217,9 +219,43 @@
         <a href="https://musicuniversity.ac.in/?page_id=493" target="_blank" rel="noreferrer">Karnataka special examinations</a>
         <a href="https://wmc.net.in/Exam_Registration_Form/examination-form.html" target="_blank" rel="noreferrer">Karnataka foundation counts</a>
         <a href="https://www.karnatik.com/beginners.pdf" target="_blank" rel="noreferrer">Beginner notation reference</a>
+        <a href="https://anuradhamahesh.wordpress.com/wp-content/uploads/2010/09/02-vakra-janta-varisai.pdf" target="_blank" rel="noreferrer">Vakra Janta notation</a>
       </div>
     </dialog>
 
-    <script type="module" src="./app.js?v=30"></script>
+    <dialog id="guide-dialog" class="wide-dialog">
+      <div class="dialog-header">
+        <div><span class="eyebrow">A calm foundation</span><h2>Using SWAR meaningfully</h2></div>
+        <button class="dialog-close" type="button" aria-label="Close">×</button>
+      </div>
+      <div class="guide-grid">
+        <section><span class="guide-number">01</span><h3>Starting with SWAR</h3><p>Choose a comfortable śruti with a teacher or adult. Listen to one complete cycle, then join gently. Stay in first speed until pitch, breath and tāḷa feel steady; move to second and third speed only without strain.</p></section>
+        <section><span class="guide-number">02</span><h3>Learning with a teacher</h3><p>Use the canvas as a shared visual and sing with the teacher’s pronunciation and pathāntaram. Let the teacher decide śruti, tempo, rāgam and when to progress. The app is best for recall between lessons.</p></section>
+        <section><span class="guide-number">03</span><h3>Teaching with SWAR</h3><p>Demonstrate first, then let the learner echo while keeping hand tāḷa. Assign a short named lesson and settings, not an open-ended session. In online lessons, take turns instead of trying to sing simultaneously through network delay.</p></section>
+      </div>
+      <div class="guide-note"><strong>What the synthesiser can do</strong><p>It can give a repeatable pitch path, pulse and sustained-note model. It cannot judge voice quality, breathing, gamaka, pronunciation, strain or a school’s pathāntaram; a human teacher remains the authority.</p></div>
+      <details class="guide-sources"><summary>Research and curriculum sources</summary><div class="dialog-links">
+        <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12579003/" target="_blank" rel="noreferrer">Pitch feedback study</a>
+        <a href="https://swarsindhu.pratibha-spandan.org/wp-content/uploads/v12i03a51.pdf" target="_blank" rel="noreferrer">Beginner learning difficulties</a>
+        <a href="https://www.cambridge.org/core/journals/journal-of-the-royal-musical-association/article/adjusting-to-the-other-audiencing-through-gesture-in-karnatak-vocal-lessons/CEC682A2FCE54ACE0E9526A790AB2EAE" target="_blank" rel="noreferrer">Gesture and imitation</a>
+        <a href="https://swarsindhu.pratibha-spandan.org/wp-content/uploads/v11i02a15.pdf" target="_blank" rel="noreferrer">Online teaching constraints</a>
+        <a href="https://www.tnjjmfau.in/images/syllabus/Off_Campus/Grades/Vocal.pdf" target="_blank" rel="noreferrer">Tamil Nadu syllabus</a>
+      </div></details>
+    </dialog>
+
+    <dialog id="explore-dialog" class="wide-dialog">
+      <div class="dialog-header">
+        <div><span class="eyebrow">Reference spaces</span><h2>Explore beyond the lesson</h2></div>
+        <button class="dialog-close" type="button" aria-label="Close">×</button>
+      </div>
+      <p>These are separate, quiet reference tools. Your current lesson stays uncluttered.</p>
+      <nav class="explore-grid" aria-label="Explore Carnatic concepts">
+        <a href="./melakarta.html"><span>72</span><strong>Mēḷakarta explorer</strong><small>See the parent-rāga system and hear a scale.</small></a>
+        <a href="./metronome.html"><span>35</span><strong>Tāḷa metronome</strong><small>Feel the sapta-tāḷa and five-jāti combinations.</small></a>
+        <a href="./glossary.html"><span>அ</span><strong>Foundation glossary</strong><small>English-first terms with Tamil alongside.</small></a>
+      </nav>
+    </dialog>
+
+    <script type="module" src="./app.js?v=32"></script>
   </body>
 </html>

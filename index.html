@@ -17,13 +17,14 @@
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="icon" href="./assets/app-icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/app-icon-180.png" />
+    <link rel="preload" href="./assets/taala-hand-sprite.png" as="image" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=33" />
+    <link rel="stylesheet" href="./styles.css?v=34c" />
   </head>
   <body>
     <div class="mobile-note" role="status">
@@ -64,11 +65,11 @@
           <div class="lesson-library" id="lesson-library"></div>
 
           <div class="source-tools">
-            <button class="mini-tool" id="guide-button" type="button"><strong>Guide</strong><small>How to begin</small></button>
-            <button class="mini-tool" id="explore-button" type="button"><strong>Explore</strong><small>Rāga · Tāḷa</small></button>
-            <button class="source-link" id="source-button" type="button">
+            <button class="mini-tool" id="guide-button" type="button" aria-label="Guide: how to begin"><strong>Guide</strong><small>Start</small></button>
+            <button class="mini-tool" id="explore-button" type="button" aria-label="Explore rāga and tāḷa"><strong>Explore</strong><small>Rāga</small></button>
+            <button class="source-link" id="source-button" type="button" aria-label="Curriculum by Swar: sources and teaching choices">
               <img class="source-logo" src="./assets/swar-author.png" alt="" />
-              <span><strong>Curriculum by Swar</strong><small>Sources and teaching choices</small></span>
+              <span><strong>Sources</strong><small>Swar</small></span>
             </button>
             <a class="print-link" href="./print.html" target="_blank" aria-label="Open printable curriculum booklet for sections 01 to 06">
               <strong>01–06</strong><small>Print PDF</small>
@@ -149,6 +150,11 @@
               <span class="play-symbol" aria-hidden="true">▶</span>
               <span class="play-label">Play all &amp; loop</span>
             </button>
+
+            <div class="tala-hand-cue" id="tala-hand-cue" aria-hidden="true" hidden>
+              <span class="tala-hand-sprite" id="tala-hand-sprite"></span>
+              <span class="tala-hand-label" id="tala-hand-label">Clap</span>
+            </div>
 
             <div class="timeline">
               <div class="timeline-labels">
@@ -256,6 +262,6 @@
       </nav>
     </dialog>
 
-    <script type="module" src="./app.js?v=33"></script>
+    <script type="module" src="./app.js?v=34c"></script>
   </body>
 </html>

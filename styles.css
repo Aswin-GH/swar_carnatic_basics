@@ -761,6 +761,11 @@ select {
   font-style: italic;
 }
 
+.swara.rest {
+  color: var(--ink-faint);
+  font-family: Georgia, serif;
+}
+
 .swara.tamil {
   font-family: "Noto Serif Tamil", serif;
   font-size: clamp(18px, 1.75vw, 25px);

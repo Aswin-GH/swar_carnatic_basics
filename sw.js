@@ -1,14 +1,14 @@
-const CACHE_NAME = "swar-carnatic-basics-v29";
+const CACHE_NAME = "swar-carnatic-basics-v30";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./styles.css?v=29",
-  "./app.js?v=29",
-  "./content.js?v=29",
-  "./curriculum-db.js?v=29",
+  "./styles.css?v=30",
+  "./app.js?v=30",
+  "./content.js?v=30",
+  "./curriculum-db.js?v=30",
   "./print.html",
-  "./print.css?v=29",
-  "./print.js?v=29",
+  "./print.css?v=30",
+  "./print.js?v=30",
   "./manifest.webmanifest",
   "./assets/app-icon.svg",
   "./assets/app-icon-180.png",

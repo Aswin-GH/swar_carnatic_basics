@@ -1,1 +1,973 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#7b436f"><title>Tāḷa metronome · SWAR</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;500;600&display=swap"><link rel="stylesheet" href="./explore.css?v=32"></head><body><div class="explore-shell"><header><a class="back" href="./"><i>←</i><span><strong>Back to lessons</strong><small>SWAR, music and more</small></span></a><div class="page-title"><h1>Tāḷa metronome</h1><p>7 tāḷas × 5 jātis · 35 combinations</p></div></header><main class="explorer-body"><aside class="side"><label>Base tāḷam<select id="base"></select></label><label>Jāti<select id="jati"></select></label><label>Subdivision<select id="subdivision"><option value="1">1st speed · 1 per akṣara</option><option value="2">2nd speed · 2 per akṣara</option><option value="4">3rd speed · 4 per akṣara</option></select></label><label>Tempo · <output id="tempo-out">72</output> BPM<input id="tempo" type="range" min="40" max="160" value="72"></label><button class="primary" id="start" type="button">▶ Start tāḷa</button><p class="source-note">Keep the hand action—not only the sound. The 35 combinations come from the seven sūḷādi tāḷas crossed with five laghu jātis.</p></aside><section class="detail"><article class="hero-card"><span class="eyebrow" id="meta"></span><h2 id="title"></h2><p class="tamil-name" id="tamil"></p><div class="beat-ring"><strong id="beat">1</strong><span id="action">Clap</span></div><div class="beat-dots" id="dots"></div></article><div class="info-grid"><div class="info-card"><strong>Laghu</strong><small>One clap followed by finger counts; its length changes with jāti.</small></div><div class="info-card"><strong>Drutam</strong><small>Two akṣaras: clap, then wave.</small></div><div class="info-card"><strong>Anudrutam</strong><small>One akṣara: a single clap.</small></div></div><p class="source-note">Structure checked against the <a href="https://cbseacademic.nic.in/web_material/CurriculumMain24/Sec/Carnatic_Vocal_Sec_2023-24.pdf" target="_blank" rel="noreferrer">CBSE Carnatic syllabus</a> and the app’s researched 35-tāḷa dataset.</p></section></main></div><script type="module" src="./metronome.js?v=32"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Tāḷa metronome · SWAR</title>
+<meta name="description" content="Part of the Swar katapayadi toolkit for Carnatic music." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="manifest" href="./manifest.webmanifest" />
+<meta name="theme-color" content="#7b436f" />
+<link rel="apple-touch-icon" href="./assets/app-icon-180.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Swar Metronome" />
+<link rel="icon" href="./assets/app-icon.svg" type="image/svg+xml" />
+</head>
+<body>
+<div style="background:var(--ink,#35271A); color:var(--paper,#F1E3C6); font-family:-apple-system,'Avenir Next','Segoe UI',sans-serif; font-size:13px; padding:10px 16px; display:flex; align-items:center; gap:8px;">
+<a href="./" style="color:inherit; text-decoration:none; opacity:0.9;">&larr; back to lessons</a>
+<span style="opacity:0.5;">/</span>
+<span style="opacity:0.85;">tāḷa metronome</span>
+</div>
+<style>
+:root{
+  --paper:#F1E3C6; --paper-deep:#DFC89C; --paper-line:#C7AD80;
+  --ink:#35271A; --ink-soft:#6B5236; --ink-faint:#9C8563;
+  --accent:#B5701E; --accent-soft:#E7B978; --focus:#2F6B62;
+  --font-display:'Iowan Old Style','Palatino Linotype',Georgia,serif;
+  --font-ui:-apple-system,'Avenir Next','Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{ --paper:#241C13; --paper-deep:#332818; --paper-line:#4A3B26; --ink:#F1E3C6; --ink-soft:#C9B48C; --ink-faint:#8C7A5C; --accent:#E3A24C; --accent-soft:#5C4322; --focus:#4FA396; }
+}
+:root[data-theme="dark"]{ --paper:#241C13; --paper-deep:#332818; --paper-line:#4A3B26; --ink:#F1E3C6; --ink-soft:#C9B48C; --ink-faint:#8C7A5C; --accent:#E3A24C; --accent-soft:#5C4322; --focus:#4FA396; }
+:root[data-theme="light"]{ --paper:#F1E3C6; --paper-deep:#DFC89C; --paper-line:#C7AD80; --ink:#35271A; --ink-soft:#6B5236; --ink-faint:#9C8563; --accent:#B5701E; --accent-soft:#E7B978; --focus:#2F6B62; }
+*{box-sizing:border-box;}
+.tm-page{ background:var(--paper); color:var(--ink); font-family:var(--font-ui); min-height:100vh; padding:2rem 1.25rem 3rem; }
+.tm-wrap{ max-width:780px; margin:0 auto; }
+.tm-mark{ font-size:12px; letter-spacing:0.08em; color:var(--ink-faint); text-transform:uppercase; }
+.tm-title{ font-family:var(--font-display); font-size:28px; margin:0.25rem 0 0.15rem; text-wrap:balance; }
+.tm-sub{ font-size:14px; color:var(--ink-soft); margin:0 0 1.75rem; }
+.tm-panel{ background:var(--paper-deep); border:1px solid var(--paper-line); border-radius:16px; padding:1.25rem 1.25rem 1.5rem; }
+.tm-group-label{ font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-faint); margin:0 0 8px; }
+.tm-pills{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:1.1rem; }
+.tm-pill{ font-family:var(--font-ui); font-size:13.5px; color:var(--ink-soft); background:transparent; border:1px solid var(--paper-line); border-radius:999px; padding:6px 14px; cursor:pointer; transition:background 0.15s,color 0.15s,border-color 0.15s; }
+.tm-pill:hover{ border-color:var(--ink-faint); }
+.tm-pill.on{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+.tm-pill:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
+.tm-readout{ font-family:var(--font-display); font-size:17px; margin:0.2rem 0 1.4rem; }
+.tm-readout .n{ font-variant-numeric:tabular-nums; color:var(--accent); }
+.tm-alias{ font-family:var(--font-ui); font-size:12.5px; color:var(--ink-faint); font-style:italic; }
+.tm-i18n{ font-size:13px; color:var(--ink-soft); margin:0 0 0.6rem; }
+.tm-i18n .tabular{ font-variant-numeric:tabular-nums; color:var(--accent); }
+.tm-katapayadi-note{ font-size:12px; color:var(--ink-faint); font-style:italic; margin:0 0 1rem; }
+.tm-seq{ display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:14px; padding:1.6rem 0.5rem; min-height:96px; }
+.tm-anga{ display:flex; align-items:center; gap:9px; background:var(--paper); border:1px solid var(--paper-line); border-radius:12px; padding:10px 11px 8px; position:relative; }
+.tm-anga-tag{ position:absolute; top:-9px; left:10px; font-size:9.5px; letter-spacing:0.05em; text-transform:uppercase; color:var(--ink-faint); background:var(--paper-deep); padding:0 5px; }
+.beat{ display:flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:50%; flex-shrink:0; transition:transform 0.1s var(--ease,ease), background 0.1s, border-color 0.1s; }
+.beat.clap{ background:var(--ink); }
+.beat.wave{ background:transparent; border:2.5px solid var(--ink); }
+.beat.count{ width:15px; height:15px; background:var(--ink-faint); }
+.beat.active{ transform:scale(1.32); background:var(--accent) !important; border-color:var(--accent) !important; }
+.subgap{ display:flex; align-items:center; gap:5px; width:16px; justify-content:center; flex-shrink:0; }
+.subdot{ width:5px; height:5px; border-radius:50%; background:var(--paper-line); transition:transform 0.08s,background 0.08s; }
+.subdot.active{ background:var(--accent); transform:scale(2.1); }
+.tm-now{ text-align:center; font-size:12.5px; color:var(--ink-faint); min-height:1.2em; margin-bottom:0.2rem; }
+.tm-controls{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-top:0.6rem; }
+.tm-tempo{ flex:1; min-width:180px; }
+.tm-tempo label{ display:block; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:4px; }
+.tm-tempo-row{ display:flex; align-items:center; gap:10px; }
+input[type="range"]{ flex:1; accent-color:var(--accent); }
+.tm-bpm{ font-variant-numeric:tabular-nums; font-size:14px; min-width:64px; color:var(--ink-soft); }
+.tm-play{ font-family:var(--font-ui); font-weight:600; font-size:14px; color:var(--paper); background:var(--accent); border:none; border-radius:999px; padding:12px 26px; cursor:pointer; display:flex; align-items:center; gap:8px; transition:filter 0.15s; }
+.tm-play:hover{ filter:brightness(1.08); }
+.tm-play:focus-visible{ outline:2px solid var(--focus); outline-offset:2px; }
+.tm-legend{ display:flex; flex-wrap:wrap; gap:16px; margin-top:1.4rem; font-size:12px; color:var(--ink-faint); }
+.tm-legend span{ display:inline-flex; align-items:center; gap:6px; }
+.leg-dot{ width:14px; height:14px; border-radius:50%; display:inline-block; }
+.leg-clap{ background:var(--ink-faint); }
+.leg-wave{ background:transparent; border:2px solid var(--ink-faint); }
+.leg-count{ width:8px; height:8px; background:var(--ink-faint); }
+.leg-sub{ width:5px; height:5px; background:var(--ink-faint); }
+@media (prefers-reduced-motion:reduce){ .beat, .subdot{ transition:background 0.1s; } .beat.active{ transform:none; } .subdot.active{ transform:none; } }
+</style>
+<div class="tm-page">
+<h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Interactive taala metronome: choose a thaala and jaathi, then play a metronome that sounds the clap, wave and finger-count of the thaala and shows internal subdivision taps at higher speeds</h2>
+<div class="tm-wrap">
+  <p class="tm-mark">swar &middot; music and more</p>
+  <h1 class="tm-title">Tāḷa metronome</h1>
+  <p class="tm-sub">hear and see the anga structure &mdash; clap, wave, count &mdash; at first, second and third speed</p>
+
+  <div class="tm-panel">
+    <p class="tm-group-label">thaalam</p>
+    <div class="tm-pills" id="thaala-pills"></div>
+    <p class="tm-group-label">jaathi</p>
+    <div class="tm-pills" id="jaathi-pills"></div>
+
+    <p class="tm-readout" id="readout"></p>
+    <p class="tm-i18n" id="readout-i18n"></p>
+    <p class="tm-katapayadi-note" id="katapayadi-note"></p>
+
+    <div class="tm-seq" id="sequence" aria-hidden="true"></div>
+    <p class="tm-now" id="now-playing">&nbsp;</p>
+
+    <div class="tm-controls">
+      <button class="tm-play" id="play-btn" aria-pressed="false">
+        <span id="play-icon">&#9658;</span><span id="play-label">play</span>
+      </button>
+      <div class="tm-pills" id="speed-pills" style="margin:0;"></div>
+      <div class="tm-tempo">
+        <label for="tempo">tempo &middot; aksharas per minute</label>
+        <div class="tm-tempo-row">
+          <input type="range" id="tempo" min="40" max="160" step="2" value="60" />
+          <span class="tm-bpm" id="tempo-out">60 /min</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tm-legend">
+      <span><i class="leg-dot leg-clap"></i>clap</span>
+      <span><i class="leg-dot leg-wave"></i>wave</span>
+      <span><i class="leg-dot leg-count"></i>finger count</span>
+      <span><i class="leg-dot leg-sub"></i>internal tap (2nd/3rd speed)</span>
+    </div>
+  </div>
+</div>
+</div>
+<script type="application/json" id="thaala-data">
+{
+  "sources": [
+    "https://en.wikipedia.org/wiki/Tala_(music)",
+    "https://www.mridangams.com/2007/08/saptha-tala-35-tala-175-tala.html",
+    "https://carnaticmusicexams.in/2018/06/19/the-scheme-of-35-talas/",
+    "https://www.eviolinguru.com/kadapayadi-sutra.html",
+    "https://carnaticclassicalmusic.wordpress.com/2020/01/31/35-talas-names/",
+    "https://en.wikipedia.org/wiki/Katapayadi_system",
+    "https://ta.wikipedia.org/wiki/தாளம்_(இசை)",
+    "https://ta.wikipedia.org/wiki/மட்டிய_தாளம்",
+    "https://ta.wikipedia.org/wiki/அனுதிருதம்",
+    "https://cbseacademic.nic.in/web_material/SQP/ClassX_2020_21/CarnaticMusicPercussion-MS.pdf",
+    "https://vichakshi.wordpress.com/2019/05/24/concept-of-taala-anga-jaati-and-gati/",
+    "https://soulofrythms.in/articles-for-tabla/35-taal-system/",
+    "https://hi.wikipedia.org/wiki/कर्नाटक_संगीत"
+  ],
+  "note_on_katapayadi_names": "The textbook's claim is corroborated: a katapayadi-based naming scheme for the 35 soolaadi thaalas does exist historically (e.g. Dhruva's five jaathi variants are named Pika/Vati/Saka/Lara/Dhara in the Sangita Sampradaya Pradarsini tradition, whose katapayadi values 11/14/17/23/29 exactly match the computed akshara counts), but multiple independent sources confirm these coined names are NOT used in modern practice -- musicians universally refer to thaalas descriptively by jaathi + base name (e.g. 'Chatusra Jaathi Triputa Thaalam', commonly just 'Adi Thaalam'). The specific names 'Ganeshaveena' and 'Maheshaveena' cited in the K.S.D. textbook could not be independently located in any web source searched (English or Tamil), which is itself consistent with the book's own statement that these names are not in practice -- they appear to be such a niche/obscure naming reference that they are barely documented outside specialized print texts.",
+  "anga_symbol_legend": {
+    "Laghu": "variable count = akshara value of the jaathi (3/4/5/7/9)",
+    "Drutam": "fixed 2 aksharas",
+    "Anudrutam": "fixed 1 akshara"
+  },
+  "jaathi_akshara_values": {
+    "Tisra": 3,
+    "Chatusra": 4,
+    "Khanda": 5,
+    "Misra": 7,
+    "Sankeerna": 9
+  },
+  "thaalas": [
+    {
+      "base_thaala": "Dhruva",
+      "jaathi": "Tisra",
+      "anga_pattern": "Laghu Drutam Laghu Laghu",
+      "laghu_count_per_jaathi": 3,
+      "total_aksharas": 11,
+      "akshara_formula": "3 Laghu + 1 Drutam(2) = 3L + 2",
+      "katapayadi_name": "Pika",
+      "katapayadi_name_practice_note": "This name is documented in sources tracing to Subbarama Dikshitar's Sangita Sampradaya Pradarsini tradition and its katapayadi value matches the akshara count exactly, but it is not used in modern teaching or performance -- musicians say 'Tisra/Chatusra/... Jaathi Dhruva Thaalam' instead.",
+      "total_aksharas_tamil": "௧௧",
+      "total_aksharas_deva": "११"
+    },
+    {
+      "base_thaala": "Dhruva",
+      "jaathi": "Chatusra",
+      "anga_pattern": "Laghu Drutam Laghu Laghu",
+      "laghu_count_per_jaathi": 4,
+      "total_aksharas": 14,
+      "akshara_formula": "3 Laghu + 1 Drutam(2) = 3L + 2",
+      "katapayadi_name": "Vati",
+      "katapayadi_name_practice_note": "This name is documented in sources tracing to Subbarama Dikshitar's Sangita Sampradaya Pradarsini tradition and its katapayadi value matches the akshara count exactly, but it is not used in modern teaching or performance -- musicians say 'Tisra/Chatusra/... Jaathi Dhruva Thaalam' instead.",
+      "total_aksharas_tamil": "௧௪",
+      "total_aksharas_deva": "१४"
+    },
+    {
+      "base_thaala": "Dhruva",
+      "jaathi": "Khanda",
+      "anga_pattern": "Laghu Drutam Laghu Laghu",
+      "laghu_count_per_jaathi": 5,
+      "total_aksharas": 17,
+      "akshara_formula": "3 Laghu + 1 Drutam(2) = 3L + 2",
+      "katapayadi_name": "Saka",
+      "katapayadi_name_practice_note": "This name is documented in sources tracing to Subbarama Dikshitar's Sangita Sampradaya Pradarsini tradition and its katapayadi value matches the akshara count exactly, but it is not used in modern teaching or performance -- musicians say 'Tisra/Chatusra/... Jaathi Dhruva Thaalam' instead.",
+      "total_aksharas_tamil": "௧௭",
+      "total_aksharas_deva": "१७"
+    },
+    {
+      "base_thaala": "Dhruva",
+      "jaathi": "Misra",
+      "anga_pattern": "Laghu Drutam Laghu Laghu",
+      "laghu_count_per_jaathi": 7,
+      "total_aksharas": 23,
+      "akshara_formula": "3 Laghu + 1 Drutam(2) = 3L + 2",
+      "katapayadi_name": "Lara",
+      "katapayadi_name_practice_note": "This name is documented in sources tracing to Subbarama Dikshitar's Sangita Sampradaya Pradarsini tradition and its katapayadi value matches the akshara count exactly, but it is not used in modern teaching or performance -- musicians say 'Tisra/Chatusra/... Jaathi Dhruva Thaalam' instead.",
+      "total_aksharas_tamil": "௨௩",
+      "total_aksharas_deva": "२३"
+    },
+    {
+      "base_thaala": "Dhruva",
+      "jaathi": "Sankeerna",
+      "anga_pattern": "Laghu Drutam Laghu Laghu",
+      "laghu_count_per_jaathi": 9,
+      "total_aksharas": 29,
+      "akshara_formula": "3 Laghu + 1 Drutam(2) = 3L + 2",
+      "katapayadi_name": "Dhara",
+      "katapayadi_name_practice_note": "This name is documented in sources tracing to Subbarama Dikshitar's Sangita Sampradaya Pradarsini tradition and its katapayadi value matches the akshara count exactly, but it is not used in modern teaching or performance -- musicians say 'Tisra/Chatusra/... Jaathi Dhruva Thaalam' instead.",
+      "total_aksharas_tamil": "௨௯",
+      "total_aksharas_deva": "२९"
+    },
+    {
+      "base_thaala": "Matya",
+      "jaathi": "Tisra",
+      "anga_pattern": "Laghu Drutam Laghu",
+      "laghu_count_per_jaathi": 3,
+      "total_aksharas": 8,
+      "akshara_formula": "2 Laghu + 1 Drutam(2) = 2L + 2",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௮",
+      "total_aksharas_deva": "८"
+    },
+    {
+      "base_thaala": "Matya",
+      "jaathi": "Chatusra",
+      "anga_pattern": "Laghu Drutam Laghu",
+      "laghu_count_per_jaathi": 4,
+      "total_aksharas": 10,
+      "akshara_formula": "2 Laghu + 1 Drutam(2) = 2L + 2",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௦",
+      "total_aksharas_deva": "१०"
+    },
+    {
+      "base_thaala": "Matya",
+      "jaathi": "Khanda",
+      "anga_pattern": "Laghu Drutam Laghu",
+      "laghu_count_per_jaathi": 5,
+      "total_aksharas": 12,
+      "akshara_formula": "2 Laghu + 1 Drutam(2) = 2L + 2",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௨",
+      "total_aksharas_deva": "१२"
+    },
+    {
+      "base_thaala": "Matya",
+      "jaathi": "Misra",
+      "anga_pattern": "Laghu Drutam Laghu",
+      "laghu_count_per_jaathi": 7,
+      "total_aksharas": 16,
+      "akshara_formula": "2 Laghu + 1 Drutam(2) = 2L + 2",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௬",
+      "total_aksharas_deva": "१६"
+    },
+    {
+      "base_thaala": "Matya",
+      "jaathi": "Sankeerna",
+      "anga_pattern": "Laghu Drutam Laghu",
+      "laghu_count_per_jaathi": 9,
+      "total_aksharas": 20,
+      "akshara_formula": "2 Laghu + 1 Drutam(2) = 2L + 2",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௨௦",
+      "total_aksharas_deva": "२०"
+    },
+    {
+      "base_thaala": "Rupaka",
+      "jaathi": "Tisra",
+      "anga_pattern": "Drutam Laghu",
+      "laghu_count_per_jaathi": 3,
+      "total_aksharas": 5,
+      "akshara_formula": "1 Laghu + 1 Drutam(2) = L + 2",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௫",
+      "total_aksharas_deva": "५"
+    },
+    {
+      "base_thaala": "Rupaka",
+      "jaathi": "Chatusra",
+      "anga_pattern": "Drutam Laghu",
+      "laghu_count_per_jaathi": 4,
+      "total_aksharas": 6,
+      "akshara_formula": "1 Laghu + 1 Drutam(2) = L + 2",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௬",
+      "total_aksharas_deva": "६"
+    },
+    {
+      "base_thaala": "Rupaka",
+      "jaathi": "Khanda",
+      "anga_pattern": "Drutam Laghu",
+      "laghu_count_per_jaathi": 5,
+      "total_aksharas": 7,
+      "akshara_formula": "1 Laghu + 1 Drutam(2) = L + 2",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௭",
+      "total_aksharas_deva": "७"
+    },
+    {
+      "base_thaala": "Rupaka",
+      "jaathi": "Misra",
+      "anga_pattern": "Drutam Laghu",
+      "laghu_count_per_jaathi": 7,
+      "total_aksharas": 9,
+      "akshara_formula": "1 Laghu + 1 Drutam(2) = L + 2",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௯",
+      "total_aksharas_deva": "९"
+    },
+    {
+      "base_thaala": "Rupaka",
+      "jaathi": "Sankeerna",
+      "anga_pattern": "Drutam Laghu",
+      "laghu_count_per_jaathi": 9,
+      "total_aksharas": 11,
+      "akshara_formula": "1 Laghu + 1 Drutam(2) = L + 2",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௧",
+      "total_aksharas_deva": "११"
+    },
+    {
+      "base_thaala": "Jhampa",
+      "jaathi": "Tisra",
+      "anga_pattern": "Laghu Anudrutam Drutam",
+      "laghu_count_per_jaathi": 3,
+      "total_aksharas": 6,
+      "akshara_formula": "1 Laghu + 1 Anudrutam(1) + 1 Drutam(2) = L + 3",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௬",
+      "total_aksharas_deva": "६"
+    },
+    {
+      "base_thaala": "Jhampa",
+      "jaathi": "Chatusra",
+      "anga_pattern": "Laghu Anudrutam Drutam",
+      "laghu_count_per_jaathi": 4,
+      "total_aksharas": 7,
+      "akshara_formula": "1 Laghu + 1 Anudrutam(1) + 1 Drutam(2) = L + 3",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௭",
+      "total_aksharas_deva": "७"
+    },
+    {
+      "base_thaala": "Jhampa",
+      "jaathi": "Khanda",
+      "anga_pattern": "Laghu Anudrutam Drutam",
+      "laghu_count_per_jaathi": 5,
+      "total_aksharas": 8,
+      "akshara_formula": "1 Laghu + 1 Anudrutam(1) + 1 Drutam(2) = L + 3",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௮",
+      "total_aksharas_deva": "८"
+    },
+    {
+      "base_thaala": "Jhampa",
+      "jaathi": "Misra",
+      "anga_pattern": "Laghu Anudrutam Drutam",
+      "laghu_count_per_jaathi": 7,
+      "total_aksharas": 10,
+      "akshara_formula": "1 Laghu + 1 Anudrutam(1) + 1 Drutam(2) = L + 3",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௦",
+      "total_aksharas_deva": "१०"
+    },
+    {
+      "base_thaala": "Jhampa",
+      "jaathi": "Sankeerna",
+      "anga_pattern": "Laghu Anudrutam Drutam",
+      "laghu_count_per_jaathi": 9,
+      "total_aksharas": 12,
+      "akshara_formula": "1 Laghu + 1 Anudrutam(1) + 1 Drutam(2) = L + 3",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௨",
+      "total_aksharas_deva": "१२"
+    },
+    {
+      "base_thaala": "Triputa",
+      "jaathi": "Tisra",
+      "anga_pattern": "Laghu Drutam Drutam",
+      "laghu_count_per_jaathi": 3,
+      "total_aksharas": 7,
+      "akshara_formula": "1 Laghu + 2 Drutam(2+2) = L + 4",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௭",
+      "total_aksharas_deva": "७"
+    },
+    {
+      "base_thaala": "Triputa",
+      "jaathi": "Chatusra",
+      "anga_pattern": "Laghu Drutam Drutam",
+      "laghu_count_per_jaathi": 4,
+      "total_aksharas": 8,
+      "akshara_formula": "1 Laghu + 2 Drutam(2+2) = L + 4",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௮",
+      "total_aksharas_deva": "८"
+    },
+    {
+      "base_thaala": "Triputa",
+      "jaathi": "Khanda",
+      "anga_pattern": "Laghu Drutam Drutam",
+      "laghu_count_per_jaathi": 5,
+      "total_aksharas": 9,
+      "akshara_formula": "1 Laghu + 2 Drutam(2+2) = L + 4",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௯",
+      "total_aksharas_deva": "९"
+    },
+    {
+      "base_thaala": "Triputa",
+      "jaathi": "Misra",
+      "anga_pattern": "Laghu Drutam Drutam",
+      "laghu_count_per_jaathi": 7,
+      "total_aksharas": 11,
+      "akshara_formula": "1 Laghu + 2 Drutam(2+2) = L + 4",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௧",
+      "total_aksharas_deva": "११"
+    },
+    {
+      "base_thaala": "Triputa",
+      "jaathi": "Sankeerna",
+      "anga_pattern": "Laghu Drutam Drutam",
+      "laghu_count_per_jaathi": 9,
+      "total_aksharas": 13,
+      "akshara_formula": "1 Laghu + 2 Drutam(2+2) = L + 4",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௩",
+      "total_aksharas_deva": "१३"
+    },
+    {
+      "base_thaala": "Ata",
+      "jaathi": "Tisra",
+      "anga_pattern": "Laghu Laghu Drutam Drutam",
+      "laghu_count_per_jaathi": 3,
+      "total_aksharas": 10,
+      "akshara_formula": "2 Laghu + 2 Drutam(2+2) = 2L + 4",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௦",
+      "total_aksharas_deva": "१०"
+    },
+    {
+      "base_thaala": "Ata",
+      "jaathi": "Chatusra",
+      "anga_pattern": "Laghu Laghu Drutam Drutam",
+      "laghu_count_per_jaathi": 4,
+      "total_aksharas": 12,
+      "akshara_formula": "2 Laghu + 2 Drutam(2+2) = 2L + 4",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௨",
+      "total_aksharas_deva": "१२"
+    },
+    {
+      "base_thaala": "Ata",
+      "jaathi": "Khanda",
+      "anga_pattern": "Laghu Laghu Drutam Drutam",
+      "laghu_count_per_jaathi": 5,
+      "total_aksharas": 14,
+      "akshara_formula": "2 Laghu + 2 Drutam(2+2) = 2L + 4",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௪",
+      "total_aksharas_deva": "१४"
+    },
+    {
+      "base_thaala": "Ata",
+      "jaathi": "Misra",
+      "anga_pattern": "Laghu Laghu Drutam Drutam",
+      "laghu_count_per_jaathi": 7,
+      "total_aksharas": 18,
+      "akshara_formula": "2 Laghu + 2 Drutam(2+2) = 2L + 4",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௮",
+      "total_aksharas_deva": "१८"
+    },
+    {
+      "base_thaala": "Ata",
+      "jaathi": "Sankeerna",
+      "anga_pattern": "Laghu Laghu Drutam Drutam",
+      "laghu_count_per_jaathi": 9,
+      "total_aksharas": 22,
+      "akshara_formula": "2 Laghu + 2 Drutam(2+2) = 2L + 4",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௨௨",
+      "total_aksharas_deva": "२२"
+    },
+    {
+      "base_thaala": "Eka",
+      "jaathi": "Tisra",
+      "anga_pattern": "Laghu",
+      "laghu_count_per_jaathi": 3,
+      "total_aksharas": 3,
+      "akshara_formula": "1 Laghu = L",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௩",
+      "total_aksharas_deva": "३"
+    },
+    {
+      "base_thaala": "Eka",
+      "jaathi": "Chatusra",
+      "anga_pattern": "Laghu",
+      "laghu_count_per_jaathi": 4,
+      "total_aksharas": 4,
+      "akshara_formula": "1 Laghu = L",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௪",
+      "total_aksharas_deva": "४"
+    },
+    {
+      "base_thaala": "Eka",
+      "jaathi": "Khanda",
+      "anga_pattern": "Laghu",
+      "laghu_count_per_jaathi": 5,
+      "total_aksharas": 5,
+      "akshara_formula": "1 Laghu = L",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௫",
+      "total_aksharas_deva": "५"
+    },
+    {
+      "base_thaala": "Eka",
+      "jaathi": "Misra",
+      "anga_pattern": "Laghu",
+      "laghu_count_per_jaathi": 7,
+      "total_aksharas": 7,
+      "akshara_formula": "1 Laghu = L",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௭",
+      "total_aksharas_deva": "७"
+    },
+    {
+      "base_thaala": "Eka",
+      "jaathi": "Sankeerna",
+      "anga_pattern": "Laghu",
+      "laghu_count_per_jaathi": 9,
+      "total_aksharas": 9,
+      "akshara_formula": "1 Laghu = L",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௯",
+      "total_aksharas_deva": "९"
+    }
+  ],
+  "base_thaala_names": {
+    "Dhruva": {
+      "english": "Dhruva",
+      "deva": "ध्रुव",
+      "tamil": "துருவ"
+    },
+    "Matya": {
+      "english": "Matya",
+      "deva": "मत्य",
+      "tamil": "மட்டிய"
+    },
+    "Rupaka": {
+      "english": "Rupaka",
+      "deva": "रूपक",
+      "tamil": "ரூபக"
+    },
+    "Jhampa": {
+      "english": "Jhampa",
+      "deva": "झम्पा",
+      "tamil": "ஜம்பை"
+    },
+    "Triputa": {
+      "english": "Triputa",
+      "deva": "त्रिपुट",
+      "tamil": "திரிபுடை"
+    },
+    "Ata": {
+      "english": "Ata",
+      "deva": "अट",
+      "tamil": "அட"
+    },
+    "Eka": {
+      "english": "Eka",
+      "deva": "एक",
+      "tamil": "ஏக"
+    }
+  },
+  "jaathi_names": {
+    "Tisra": {
+      "english": "Tisra",
+      "deva": "तिस्र",
+      "tamil": "திஸ்ர"
+    },
+    "Chatusra": {
+      "english": "Chatusra",
+      "deva": "चतुश्र",
+      "tamil": "சதுஸ்ர"
+    },
+    "Khanda": {
+      "english": "Khanda",
+      "deva": "खंड",
+      "tamil": "கண்ட"
+    },
+    "Misra": {
+      "english": "Misra",
+      "deva": "मिश्र",
+      "tamil": "மிஸ்ர"
+    },
+    "Sankeerna": {
+      "english": "Sankeerna",
+      "deva": "संकीर्ण",
+      "tamil": "சங்கீர்ண"
+    }
+  },
+  "anga_names": {
+    "Laghu": {
+      "english": "Laghu",
+      "deva": "लघु",
+      "tamil": "லகு"
+    },
+    "Drutam": {
+      "english": "Drutam",
+      "deva": "द्रुतम्",
+      "tamil": "திருதம்"
+    },
+    "Anudrutam": {
+      "english": "Anudrutam",
+      "deva": "अनुद्रुतम्",
+      "tamil": "அனுதிருதம்"
+    }
+  }
+}
+
+</script>
+<script>
+(function(){
+  var DATA = JSON.parse(document.getElementById('thaala-data').textContent);
+  var ANGA_LETTER = { Laghu:'L', Drutam:'D', Anudrutam:'A' };
+  var THAALAS = {};
+  var COMBOS = {};
+  DATA.thaalas.forEach(function(t){
+    if(!THAALAS[t.base_thaala]){
+      THAALAS[t.base_thaala] = { pattern: t.anga_pattern.split(' ').map(function(w){ return ANGA_LETTER[w]; }) };
+    }
+    COMBOS[t.base_thaala + '|' + t.jaathi] = t;
+  });
+  var JAATHIS = DATA.jaathi_akshara_values;
+  var ALIASES = { 'Triputa|Chatusra': 'Adi thaalam' };
+
+  var state = { thaala:'Triputa', jaathi:'Chatusra', speed:1, bpm:60, playing:false };
+  var sequence = [];
+  var groups = [];
+
+  function buildSequence(){
+    var pattern = THAALAS[state.thaala].pattern;
+    var laghu = JAATHIS[state.jaathi];
+    sequence = [];
+    groups = [];
+    pattern.forEach(function(anga){
+      var startIdx = sequence.length;
+      if(anga === 'L'){
+        sequence.push({type:'clap'});
+        for(var i=1;i<laghu;i++) sequence.push({type:'count'});
+        groups.push({label:'laghu', start:startIdx, end:sequence.length-1});
+      } else if(anga === 'D'){
+        sequence.push({type:'clap'});
+        sequence.push({type:'wave'});
+        groups.push({label:'drutam', start:startIdx, end:sequence.length-1});
+      } else {
+        sequence.push({type:'clap'});
+        groups.push({label:'anudrutam', start:startIdx, end:sequence.length-1});
+      }
+    });
+  }
+
+  function renderPills(container, options, current, onPick){
+    container.innerHTML = '';
+    options.forEach(function(opt){
+      var b = document.createElement('button');
+      b.className = 'tm-pill' + (opt === current ? ' on' : '');
+      b.textContent = opt;
+      b.type = 'button';
+      b.addEventListener('click', function(){ onPick(opt); });
+      container.appendChild(b);
+    });
+  }
+
+  function renderSpeedPills(){
+    var container = document.getElementById('speed-pills');
+    container.innerHTML = '';
+    [[1,'1st speed'],[2,'2nd speed'],[4,'3rd speed']].forEach(function(pair){
+      var b = document.createElement('button');
+      b.className = 'tm-pill' + (state.speed === pair[0] ? ' on' : '');
+      b.textContent = pair[1];
+      b.type = 'button';
+      b.addEventListener('click', function(){ stop(); state.speed = pair[0]; renderAll(); });
+      container.appendChild(b);
+    });
+  }
+
+  function subClusterEl(fromIndex){
+    var wrap = document.createElement('div');
+    wrap.className = 'subgap';
+    var count = state.speed - 1;
+    for(var k=0;k<count;k++){
+      var d = document.createElement('span');
+      d.className = 'subdot';
+      d.id = 'sub-' + fromIndex + '-' + k;
+      wrap.appendChild(d);
+    }
+    return wrap;
+  }
+
+  function beatEl(index){
+    var b = document.createElement('span');
+    b.className = 'beat ' + sequence[index].type;
+    b.id = 'beat-' + index;
+    return b;
+  }
+
+  function renderSequence(){
+    var seqEl = document.getElementById('sequence');
+    seqEl.innerHTML = '';
+    groups.forEach(function(g, gi){
+      var box = document.createElement('div');
+      box.className = 'tm-anga';
+      var tag = document.createElement('span');
+      tag.className = 'tm-anga-tag';
+      tag.textContent = g.label;
+      box.appendChild(tag);
+      for(var i=g.start;i<=g.end;i++){
+        box.appendChild(beatEl(i));
+        if(i < g.end) box.appendChild(subClusterEl(i));
+      }
+      seqEl.appendChild(box);
+      if(gi < groups.length-1) seqEl.appendChild(subClusterEl(g.end));
+    });
+    seqEl.appendChild(subClusterEl(sequence.length-1));
+  }
+
+  function renderReadout(){
+    var key = state.thaala + '|' + state.jaathi;
+    var alias = ALIASES[key];
+    var combo = COMBOS[key];
+    var baseNames = DATA.base_thaala_names[state.thaala];
+    var jaathiNames = DATA.jaathi_names[state.jaathi];
+    console.assert(!combo || combo.total_aksharas === sequence.length, 'akshara mismatch for ' + key);
+    document.getElementById('readout').innerHTML =
+      state.jaathi + ' jaathi ' + state.thaala + ' thaalam &middot; <span class="n">' + sequence.length + '</span> aksharas' +
+      (alias ? '  <span class="tm-alias">(' + alias + ')</span>' : '');
+    document.getElementById('readout-i18n').innerHTML =
+      jaathiNames.tamil + ' ' + baseNames.tamil + ' &middot; <span class="tabular">' + combo.total_aksharas_tamil + '</span>' +
+      '  &middot;  ' + jaathiNames.deva + ' ' + baseNames.deva + ' &middot; <span class="tabular">' + combo.total_aksharas_deva + '</span>';
+    var kNote = document.getElementById('katapayadi-note');
+    if(combo.katapayadi_name){
+      kNote.style.display = '';
+      kNote.textContent = 'katapayadi name: ' + combo.katapayadi_name + ' \u2014 documented historically, not used in modern practice';
+    } else {
+      kNote.style.display = 'none';
+    }
+  }
+
+  function renderAll(){
+    buildSequence();
+    renderPills(document.getElementById('thaala-pills'), Object.keys(THAALAS), state.thaala, function(v){ stop(); state.thaala=v; renderAll(); });
+    renderPills(document.getElementById('jaathi-pills'), Object.keys(JAATHIS), state.jaathi, function(v){ stop(); state.jaathi=v; renderAll(); });
+    renderSpeedPills();
+    renderReadout();
+    renderSequence();
+    document.getElementById('now-playing').textContent = '\u00A0';
+  }
+
+  // --- audio engine ---
+  var audioCtx = null;
+  var noiseBuffer = null;
+  var timerId = null;
+  var rafId = null;
+  var nextNoteTime = 0;
+  var beatIndex = 0;
+  var subIndex = 0;
+  var eventQueue = [];
+  var SCHEDULE_AHEAD = 0.12;
+  var LOOKAHEAD_MS = 25;
+
+  function ensureAudio(){
+    if(!audioCtx){
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      var len = Math.floor(audioCtx.sampleRate * 0.3);
+      noiseBuffer = audioCtx.createBuffer(1, len, audioCtx.sampleRate);
+      var data = noiseBuffer.getChannelData(0);
+      for(var i=0;i<len;i++) data[i] = Math.random()*2-1;
+    }
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+  }
+
+  function envGain(time, peak, attack, release){
+    var g = audioCtx.createGain();
+    g.gain.setValueAtTime(0.0001, time);
+    g.gain.exponentialRampToValueAtTime(peak, time + attack);
+    g.gain.exponentialRampToValueAtTime(0.001, time + release);
+    return g;
+  }
+
+  function playClap(time){
+    var src = audioCtx.createBufferSource();
+    src.buffer = noiseBuffer;
+    var filter = audioCtx.createBiquadFilter();
+    filter.type = 'bandpass'; filter.frequency.value = 1800; filter.Q.value = 5;
+    var g = envGain(time, 0.9, 0.002, 0.09);
+    src.connect(filter).connect(g).connect(audioCtx.destination);
+    src.start(time); src.stop(time + 0.1);
+  }
+  function playWave(time){
+    var osc = audioCtx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(620, time);
+    osc.frequency.exponentialRampToValueAtTime(420, time + 0.16);
+    var g = envGain(time, 0.55, 0.01, 0.18);
+    osc.connect(g).connect(audioCtx.destination);
+    osc.start(time); osc.stop(time + 0.2);
+  }
+  function playCount(time){
+    var osc = audioCtx.createOscillator();
+    osc.type = 'sine'; osc.frequency.value = 880;
+    var g = envGain(time, 0.3, 0.005, 0.05);
+    osc.connect(g).connect(audioCtx.destination);
+    osc.start(time); osc.stop(time + 0.06);
+  }
+  function playSub(time){
+    var osc = audioCtx.createOscillator();
+    osc.type = 'triangle'; osc.frequency.value = 1500;
+    var g = envGain(time, 0.18, 0.003, 0.03);
+    osc.connect(g).connect(audioCtx.destination);
+    osc.start(time); osc.stop(time + 0.04);
+  }
+
+  function scheduler(){
+    var aksharaDur = 60 / state.bpm;
+    var subDur = aksharaDur / state.speed;
+    while(nextNoteTime < audioCtx.currentTime + SCHEDULE_AHEAD){
+      var isReal = subIndex === 0;
+      if(isReal){
+        var t = sequence[beatIndex].type;
+        if(t === 'clap') playClap(nextNoteTime);
+        else if(t === 'wave') playWave(nextNoteTime);
+        else playCount(nextNoteTime);
+      } else {
+        playSub(nextNoteTime);
+      }
+      eventQueue.push({ time:nextNoteTime, beatIndex:beatIndex, subIndex:subIndex, isReal:isReal });
+      subIndex++;
+      if(subIndex >= state.speed){ subIndex = 0; beatIndex = (beatIndex + 1) % sequence.length; }
+      nextNoteTime += subDur;
+    }
+  }
+
+  function visualLoop(){
+    if(!state.playing) return;
+    var now = audioCtx.currentTime;
+    while(eventQueue.length && eventQueue[0].time <= now){
+      var ev = eventQueue.shift();
+      var el = ev.isReal ? document.getElementById('beat-' + ev.beatIndex)
+                          : document.getElementById('sub-' + ev.beatIndex + '-' + (ev.subIndex - 1));
+      if(el){
+        el.classList.add('active');
+        (function(elm){ setTimeout(function(){ elm.classList.remove('active'); }, 140); })(el);
+      }
+      if(ev.isReal){
+        var g = groups.filter(function(g){ return ev.beatIndex >= g.start && ev.beatIndex <= g.end; })[0];
+        document.getElementById('now-playing').textContent = g ? (g.label + ' \u00B7 beat ' + (ev.beatIndex+1) + ' of ' + sequence.length) : '';
+      }
+    }
+    rafId = requestAnimationFrame(visualLoop);
+  }
+
+  function play(){
+    ensureAudio();
+    beatIndex = 0; subIndex = 0; eventQueue = [];
+    nextNoteTime = audioCtx.currentTime + 0.05;
+    state.playing = true;
+    timerId = setInterval(scheduler, LOOKAHEAD_MS);
+    rafId = requestAnimationFrame(visualLoop);
+    document.getElementById('play-icon').innerHTML = '&#9632;';
+    document.getElementById('play-label').textContent = 'stop';
+    document.getElementById('play-btn').setAttribute('aria-pressed','true');
+  }
+  function stop(){
+    state.playing = false;
+    if(timerId) clearInterval(timerId);
+    if(rafId) cancelAnimationFrame(rafId);
+    document.getElementById('play-icon').innerHTML = '&#9658;';
+    document.getElementById('play-label').textContent = 'play';
+    document.getElementById('play-btn').setAttribute('aria-pressed','false');
+    document.getElementById('now-playing').textContent = '\u00A0';
+  }
+
+  document.getElementById('play-btn').addEventListener('click', function(){
+    state.playing ? stop() : play();
+  });
+  document.getElementById('tempo').addEventListener('input', function(e){
+    state.bpm = Number(e.target.value);
+    document.getElementById('tempo-out').textContent = state.bpm + ' /min';
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.code === 'Space' && e.target.tagName !== 'BUTTON' && e.target.tagName !== 'INPUT'){
+      e.preventDefault();
+      state.playing ? stop() : play();
+    }
+  });
+
+  renderAll();
+})();
+</script>
+
+<style>
+  :root,
+  :root[data-theme="light"],
+  :root[data-theme="dark"]{
+    --paper:#fbf7f6; --paper-deep:#eee4e8; --paper-line:#dbcbd4;
+    --ink:#302532; --ink-soft:#6e6170; --ink-faint:#958797;
+    --accent:#9a567f; --accent-soft:#dfc5d7; --focus:#624374;
+    --clap:#9a567f; --wave:#624374; --count:#b8849c; --sub:#cbb5d5;
+    --font-display:'Noto Serif Tamil','Iowan Old Style','Palatino Linotype',Georgia,serif;
+    --font-ui:'DM Sans',-apple-system,'Avenir Next','Segoe UI',sans-serif;
+  }
+  html,body{height:100%;margin:0;overflow:hidden;background:#d8ccd2;}
+  body>div:first-of-type{height:40px;padding:0 18px!important;background:#4f365f!important;}
+  .tm-page{height:calc(100vh - 40px);min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:1.35rem 1.25rem 2rem;background:linear-gradient(145deg,#fbf7f6,#f3e9ed);}
+  .tm-wrap{max-width:980px;}
+  .tm-panel{box-shadow:0 12px 35px rgba(79,54,95,.08);}
+  @media(max-width:719px){.tm-page{display:none}body:after{content:'SWAR explorers are designed for tablets and computers.';height:calc(100% - 40px);display:grid;place-items:center;padding:30px;text-align:center;background:var(--paper);}}
+</style>
+
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('sw.js').catch(function(err){ console.warn('sw register failed', err); });
+  });
+}
+</script>
+</body>
+</html>

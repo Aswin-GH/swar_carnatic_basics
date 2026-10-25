@@ -218,7 +218,11 @@ input:focus-visible {
 .lesson-library {
   min-height: 0;
   flex: 1;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  padding-bottom: 10px;
   border-top: 1px solid var(--line);
 }
 

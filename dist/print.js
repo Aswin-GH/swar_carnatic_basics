@@ -1,4 +1,4 @@
-import { CURRICULUM, TALAS, TAMIL_SWARAS } from "./content.js?v=32";
+import { CURRICULUM, TALAS, TAMIL_SWARAS } from "./content.js?v=33";
 
 const content = document.querySelector("#booklet-content");
 const printableSections = CURRICULUM.filter((section) => section.order <= 6 && section.status !== "next");

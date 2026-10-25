@@ -1,9 +1,9 @@
-const CACHE_NAME = "swar-carnatic-basics-v34";
+const CACHE_NAME = "swar-carnatic-basics-v35";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./styles.css?v=34c",
-  "./app.js?v=34c",
+  "./styles.css?v=35",
+  "./app.js?v=35",
   "./content.js?v=33",
   "./curriculum-db.js?v=33",
   "./print.html",
@@ -22,7 +22,7 @@ const APP_SHELL = [
   "./assets/app-icon-512.png",
   "./assets/srishti-swara.png",
   "./assets/swar-author.png",
-  "./assets/taala-hand-sprite.png"
+  "./assets/taala-hand-sprite.png?v=35"
 ];
 
 self.addEventListener("install", (event) => {

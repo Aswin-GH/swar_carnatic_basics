@@ -338,10 +338,20 @@ details[open] .summary-chevron {
 }
 
 .lesson-button > span:first-child {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
   color: inherit;
   font-size: 10px;
   font-weight: 700;
 }
+
+.lesson-button.scope-madhya-sthayi > span:first-child { background: #ead8be; color: #684c35; }
+.lesson-button.scope-vakra-janta > span:first-child { background: #d7c8e2; color: #513a66; }
+.lesson-button.scope-extended > span:first-child { background: #d9ddd0; color: #455340; }
+.lesson-button.scope-core > span:first-child { background: #ead4dc; color: #713f59; }
 
 .lesson-button > span:last-child {
   display: none;
@@ -361,11 +371,30 @@ details[open] .summary-chevron {
   width: 100%;
   margin-top: 18px;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: center;
   gap: 5px;
   flex: none;
 }
+
+.source-link { grid-column: 1 / -1; }
+
+.mini-tool {
+  min-width: 0;
+  padding: 8px 9px;
+  display: grid;
+  gap: 1px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  color: var(--violet-deep);
+  background: rgba(255, 255, 255, 0.44);
+  text-align: left;
+  cursor: pointer;
+}
+
+.mini-tool:hover { background: var(--cream); }
+.mini-tool strong { font-size: 10px; }
+.mini-tool small { color: var(--ink-soft); font-size: 8px; white-space: nowrap; }
 
 .source-link {
   min-width: 0;
@@ -1051,6 +1080,39 @@ dialog {
   background: var(--paper);
   box-shadow: 0 25px 80px rgba(48, 37, 50, 0.26);
 }
+
+dialog.wide-dialog { width: min(820px, calc(100% - 40px)); max-height: calc(100vh - 40px); overflow: auto; }
+
+.guide-grid,
+.explore-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.guide-grid section,
+.explore-grid a,
+.guide-note {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: var(--paper-warm);
+}
+
+.guide-grid h3 { margin: 10px 0 5px; font-size: 15px; }
+.guide-grid p,
+.guide-note p { margin: 0; font-size: 12px; line-height: 1.55; }
+.guide-number { color: var(--rose-deep); font-size: 11px; font-weight: 700; letter-spacing: .08em; }
+.guide-note { margin-top: 12px; background: #f1e8f2; }
+.guide-note strong { display: block; margin-bottom: 5px; font-size: 13px; }
+.guide-sources { margin-top: 14px; color: var(--violet-deep); font-size: 12px; font-weight: 700; }
+.explore-grid { text-decoration: none; }
+.explore-grid a { display: grid; gap: 7px; color: inherit; text-decoration: none; }
+.explore-grid a:hover { border-color: var(--rose); background: var(--cream); }
+.explore-grid a > span { color: var(--rose-deep); font-family: Georgia, serif; font-size: 27px; }
+.explore-grid strong { font-size: 14px; }
+.explore-grid small { color: var(--ink-soft); font-size: 11px; line-height: 1.45; }
 
 dialog::backdrop {
   background: rgba(48, 37, 50, 0.3);

@@ -1,0 +1,533 @@
+{
+  "sources": [
+    "https://en.wikipedia.org/wiki/Tala_(music)",
+    "https://www.mridangams.com/2007/08/saptha-tala-35-tala-175-tala.html",
+    "https://carnaticmusicexams.in/2018/06/19/the-scheme-of-35-talas/",
+    "https://www.eviolinguru.com/kadapayadi-sutra.html",
+    "https://carnaticclassicalmusic.wordpress.com/2020/01/31/35-talas-names/",
+    "https://en.wikipedia.org/wiki/Katapayadi_system",
+    "https://ta.wikipedia.org/wiki/தாளம்_(இசை)",
+    "https://ta.wikipedia.org/wiki/மட்டிய_தாளம்",
+    "https://ta.wikipedia.org/wiki/அனுதிருதம்",
+    "https://cbseacademic.nic.in/web_material/SQP/ClassX_2020_21/CarnaticMusicPercussion-MS.pdf",
+    "https://vichakshi.wordpress.com/2019/05/24/concept-of-taala-anga-jaati-and-gati/",
+    "https://soulofrythms.in/articles-for-tabla/35-taal-system/",
+    "https://hi.wikipedia.org/wiki/कर्नाटक_संगीत"
+  ],
+  "note_on_katapayadi_names": "The textbook's claim is corroborated: a katapayadi-based naming scheme for the 35 soolaadi thaalas does exist historically (e.g. Dhruva's five jaathi variants are named Pika/Vati/Saka/Lara/Dhara in the Sangita Sampradaya Pradarsini tradition, whose katapayadi values 11/14/17/23/29 exactly match the computed akshara counts), but multiple independent sources confirm these coined names are NOT used in modern practice -- musicians universally refer to thaalas descriptively by jaathi + base name (e.g. 'Chatusra Jaathi Triputa Thaalam', commonly just 'Adi Thaalam'). The specific names 'Ganeshaveena' and 'Maheshaveena' cited in the K.S.D. textbook could not be independently located in any web source searched (English or Tamil), which is itself consistent with the book's own statement that these names are not in practice -- they appear to be such a niche/obscure naming reference that they are barely documented outside specialized print texts.",
+  "anga_symbol_legend": {
+    "Laghu": "variable count = akshara value of the jaathi (3/4/5/7/9)",
+    "Drutam": "fixed 2 aksharas",
+    "Anudrutam": "fixed 1 akshara"
+  },
+  "jaathi_akshara_values": {
+    "Tisra": 3,
+    "Chatusra": 4,
+    "Khanda": 5,
+    "Misra": 7,
+    "Sankeerna": 9
+  },
+  "thaalas": [
+    {
+      "base_thaala": "Dhruva",
+      "jaathi": "Tisra",
+      "anga_pattern": "Laghu Drutam Laghu Laghu",
+      "laghu_count_per_jaathi": 3,
+      "total_aksharas": 11,
+      "akshara_formula": "3 Laghu + 1 Drutam(2) = 3L + 2",
+      "katapayadi_name": "Pika",
+      "katapayadi_name_practice_note": "This name is documented in sources tracing to Subbarama Dikshitar's Sangita Sampradaya Pradarsini tradition and its katapayadi value matches the akshara count exactly, but it is not used in modern teaching or performance -- musicians say 'Tisra/Chatusra/... Jaathi Dhruva Thaalam' instead.",
+      "total_aksharas_tamil": "௧௧",
+      "total_aksharas_deva": "११"
+    },
+    {
+      "base_thaala": "Dhruva",
+      "jaathi": "Chatusra",
+      "anga_pattern": "Laghu Drutam Laghu Laghu",
+      "laghu_count_per_jaathi": 4,
+      "total_aksharas": 14,
+      "akshara_formula": "3 Laghu + 1 Drutam(2) = 3L + 2",
+      "katapayadi_name": "Vati",
+      "katapayadi_name_practice_note": "This name is documented in sources tracing to Subbarama Dikshitar's Sangita Sampradaya Pradarsini tradition and its katapayadi value matches the akshara count exactly, but it is not used in modern teaching or performance -- musicians say 'Tisra/Chatusra/... Jaathi Dhruva Thaalam' instead.",
+      "total_aksharas_tamil": "௧௪",
+      "total_aksharas_deva": "१४"
+    },
+    {
+      "base_thaala": "Dhruva",
+      "jaathi": "Khanda",
+      "anga_pattern": "Laghu Drutam Laghu Laghu",
+      "laghu_count_per_jaathi": 5,
+      "total_aksharas": 17,
+      "akshara_formula": "3 Laghu + 1 Drutam(2) = 3L + 2",
+      "katapayadi_name": "Saka",
+      "katapayadi_name_practice_note": "This name is documented in sources tracing to Subbarama Dikshitar's Sangita Sampradaya Pradarsini tradition and its katapayadi value matches the akshara count exactly, but it is not used in modern teaching or performance -- musicians say 'Tisra/Chatusra/... Jaathi Dhruva Thaalam' instead.",
+      "total_aksharas_tamil": "௧௭",
+      "total_aksharas_deva": "१७"
+    },
+    {
+      "base_thaala": "Dhruva",
+      "jaathi": "Misra",
+      "anga_pattern": "Laghu Drutam Laghu Laghu",
+      "laghu_count_per_jaathi": 7,
+      "total_aksharas": 23,
+      "akshara_formula": "3 Laghu + 1 Drutam(2) = 3L + 2",
+      "katapayadi_name": "Lara",
+      "katapayadi_name_practice_note": "This name is documented in sources tracing to Subbarama Dikshitar's Sangita Sampradaya Pradarsini tradition and its katapayadi value matches the akshara count exactly, but it is not used in modern teaching or performance -- musicians say 'Tisra/Chatusra/... Jaathi Dhruva Thaalam' instead.",
+      "total_aksharas_tamil": "௨௩",
+      "total_aksharas_deva": "२३"
+    },
+    {
+      "base_thaala": "Dhruva",
+      "jaathi": "Sankeerna",
+      "anga_pattern": "Laghu Drutam Laghu Laghu",
+      "laghu_count_per_jaathi": 9,
+      "total_aksharas": 29,
+      "akshara_formula": "3 Laghu + 1 Drutam(2) = 3L + 2",
+      "katapayadi_name": "Dhara",
+      "katapayadi_name_practice_note": "This name is documented in sources tracing to Subbarama Dikshitar's Sangita Sampradaya Pradarsini tradition and its katapayadi value matches the akshara count exactly, but it is not used in modern teaching or performance -- musicians say 'Tisra/Chatusra/... Jaathi Dhruva Thaalam' instead.",
+      "total_aksharas_tamil": "௨௯",
+      "total_aksharas_deva": "२९"
+    },
+    {
+      "base_thaala": "Matya",
+      "jaathi": "Tisra",
+      "anga_pattern": "Laghu Drutam Laghu",
+      "laghu_count_per_jaathi": 3,
+      "total_aksharas": 8,
+      "akshara_formula": "2 Laghu + 1 Drutam(2) = 2L + 2",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௮",
+      "total_aksharas_deva": "८"
+    },
+    {
+      "base_thaala": "Matya",
+      "jaathi": "Chatusra",
+      "anga_pattern": "Laghu Drutam Laghu",
+      "laghu_count_per_jaathi": 4,
+      "total_aksharas": 10,
+      "akshara_formula": "2 Laghu + 1 Drutam(2) = 2L + 2",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௦",
+      "total_aksharas_deva": "१०"
+    },
+    {
+      "base_thaala": "Matya",
+      "jaathi": "Khanda",
+      "anga_pattern": "Laghu Drutam Laghu",
+      "laghu_count_per_jaathi": 5,
+      "total_aksharas": 12,
+      "akshara_formula": "2 Laghu + 1 Drutam(2) = 2L + 2",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௨",
+      "total_aksharas_deva": "१२"
+    },
+    {
+      "base_thaala": "Matya",
+      "jaathi": "Misra",
+      "anga_pattern": "Laghu Drutam Laghu",
+      "laghu_count_per_jaathi": 7,
+      "total_aksharas": 16,
+      "akshara_formula": "2 Laghu + 1 Drutam(2) = 2L + 2",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௬",
+      "total_aksharas_deva": "१६"
+    },
+    {
+      "base_thaala": "Matya",
+      "jaathi": "Sankeerna",
+      "anga_pattern": "Laghu Drutam Laghu",
+      "laghu_count_per_jaathi": 9,
+      "total_aksharas": 20,
+      "akshara_formula": "2 Laghu + 1 Drutam(2) = 2L + 2",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௨௦",
+      "total_aksharas_deva": "२०"
+    },
+    {
+      "base_thaala": "Rupaka",
+      "jaathi": "Tisra",
+      "anga_pattern": "Drutam Laghu",
+      "laghu_count_per_jaathi": 3,
+      "total_aksharas": 5,
+      "akshara_formula": "1 Laghu + 1 Drutam(2) = L + 2",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௫",
+      "total_aksharas_deva": "५"
+    },
+    {
+      "base_thaala": "Rupaka",
+      "jaathi": "Chatusra",
+      "anga_pattern": "Drutam Laghu",
+      "laghu_count_per_jaathi": 4,
+      "total_aksharas": 6,
+      "akshara_formula": "1 Laghu + 1 Drutam(2) = L + 2",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௬",
+      "total_aksharas_deva": "६"
+    },
+    {
+      "base_thaala": "Rupaka",
+      "jaathi": "Khanda",
+      "anga_pattern": "Drutam Laghu",
+      "laghu_count_per_jaathi": 5,
+      "total_aksharas": 7,
+      "akshara_formula": "1 Laghu + 1 Drutam(2) = L + 2",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௭",
+      "total_aksharas_deva": "७"
+    },
+    {
+      "base_thaala": "Rupaka",
+      "jaathi": "Misra",
+      "anga_pattern": "Drutam Laghu",
+      "laghu_count_per_jaathi": 7,
+      "total_aksharas": 9,
+      "akshara_formula": "1 Laghu + 1 Drutam(2) = L + 2",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௯",
+      "total_aksharas_deva": "९"
+    },
+    {
+      "base_thaala": "Rupaka",
+      "jaathi": "Sankeerna",
+      "anga_pattern": "Drutam Laghu",
+      "laghu_count_per_jaathi": 9,
+      "total_aksharas": 11,
+      "akshara_formula": "1 Laghu + 1 Drutam(2) = L + 2",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௧",
+      "total_aksharas_deva": "११"
+    },
+    {
+      "base_thaala": "Jhampa",
+      "jaathi": "Tisra",
+      "anga_pattern": "Laghu Anudrutam Drutam",
+      "laghu_count_per_jaathi": 3,
+      "total_aksharas": 6,
+      "akshara_formula": "1 Laghu + 1 Anudrutam(1) + 1 Drutam(2) = L + 3",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௬",
+      "total_aksharas_deva": "६"
+    },
+    {
+      "base_thaala": "Jhampa",
+      "jaathi": "Chatusra",
+      "anga_pattern": "Laghu Anudrutam Drutam",
+      "laghu_count_per_jaathi": 4,
+      "total_aksharas": 7,
+      "akshara_formula": "1 Laghu + 1 Anudrutam(1) + 1 Drutam(2) = L + 3",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௭",
+      "total_aksharas_deva": "७"
+    },
+    {
+      "base_thaala": "Jhampa",
+      "jaathi": "Khanda",
+      "anga_pattern": "Laghu Anudrutam Drutam",
+      "laghu_count_per_jaathi": 5,
+      "total_aksharas": 8,
+      "akshara_formula": "1 Laghu + 1 Anudrutam(1) + 1 Drutam(2) = L + 3",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௮",
+      "total_aksharas_deva": "८"
+    },
+    {
+      "base_thaala": "Jhampa",
+      "jaathi": "Misra",
+      "anga_pattern": "Laghu Anudrutam Drutam",
+      "laghu_count_per_jaathi": 7,
+      "total_aksharas": 10,
+      "akshara_formula": "1 Laghu + 1 Anudrutam(1) + 1 Drutam(2) = L + 3",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௦",
+      "total_aksharas_deva": "१०"
+    },
+    {
+      "base_thaala": "Jhampa",
+      "jaathi": "Sankeerna",
+      "anga_pattern": "Laghu Anudrutam Drutam",
+      "laghu_count_per_jaathi": 9,
+      "total_aksharas": 12,
+      "akshara_formula": "1 Laghu + 1 Anudrutam(1) + 1 Drutam(2) = L + 3",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௨",
+      "total_aksharas_deva": "१२"
+    },
+    {
+      "base_thaala": "Triputa",
+      "jaathi": "Tisra",
+      "anga_pattern": "Laghu Drutam Drutam",
+      "laghu_count_per_jaathi": 3,
+      "total_aksharas": 7,
+      "akshara_formula": "1 Laghu + 2 Drutam(2+2) = L + 4",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௭",
+      "total_aksharas_deva": "७"
+    },
+    {
+      "base_thaala": "Triputa",
+      "jaathi": "Chatusra",
+      "anga_pattern": "Laghu Drutam Drutam",
+      "laghu_count_per_jaathi": 4,
+      "total_aksharas": 8,
+      "akshara_formula": "1 Laghu + 2 Drutam(2+2) = L + 4",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௮",
+      "total_aksharas_deva": "८"
+    },
+    {
+      "base_thaala": "Triputa",
+      "jaathi": "Khanda",
+      "anga_pattern": "Laghu Drutam Drutam",
+      "laghu_count_per_jaathi": 5,
+      "total_aksharas": 9,
+      "akshara_formula": "1 Laghu + 2 Drutam(2+2) = L + 4",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௯",
+      "total_aksharas_deva": "९"
+    },
+    {
+      "base_thaala": "Triputa",
+      "jaathi": "Misra",
+      "anga_pattern": "Laghu Drutam Drutam",
+      "laghu_count_per_jaathi": 7,
+      "total_aksharas": 11,
+      "akshara_formula": "1 Laghu + 2 Drutam(2+2) = L + 4",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௧",
+      "total_aksharas_deva": "११"
+    },
+    {
+      "base_thaala": "Triputa",
+      "jaathi": "Sankeerna",
+      "anga_pattern": "Laghu Drutam Drutam",
+      "laghu_count_per_jaathi": 9,
+      "total_aksharas": 13,
+      "akshara_formula": "1 Laghu + 2 Drutam(2+2) = L + 4",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௩",
+      "total_aksharas_deva": "१३"
+    },
+    {
+      "base_thaala": "Ata",
+      "jaathi": "Tisra",
+      "anga_pattern": "Laghu Laghu Drutam Drutam",
+      "laghu_count_per_jaathi": 3,
+      "total_aksharas": 10,
+      "akshara_formula": "2 Laghu + 2 Drutam(2+2) = 2L + 4",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௦",
+      "total_aksharas_deva": "१०"
+    },
+    {
+      "base_thaala": "Ata",
+      "jaathi": "Chatusra",
+      "anga_pattern": "Laghu Laghu Drutam Drutam",
+      "laghu_count_per_jaathi": 4,
+      "total_aksharas": 12,
+      "akshara_formula": "2 Laghu + 2 Drutam(2+2) = 2L + 4",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௨",
+      "total_aksharas_deva": "१२"
+    },
+    {
+      "base_thaala": "Ata",
+      "jaathi": "Khanda",
+      "anga_pattern": "Laghu Laghu Drutam Drutam",
+      "laghu_count_per_jaathi": 5,
+      "total_aksharas": 14,
+      "akshara_formula": "2 Laghu + 2 Drutam(2+2) = 2L + 4",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௪",
+      "total_aksharas_deva": "१४"
+    },
+    {
+      "base_thaala": "Ata",
+      "jaathi": "Misra",
+      "anga_pattern": "Laghu Laghu Drutam Drutam",
+      "laghu_count_per_jaathi": 7,
+      "total_aksharas": 18,
+      "akshara_formula": "2 Laghu + 2 Drutam(2+2) = 2L + 4",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௧௮",
+      "total_aksharas_deva": "१८"
+    },
+    {
+      "base_thaala": "Ata",
+      "jaathi": "Sankeerna",
+      "anga_pattern": "Laghu Laghu Drutam Drutam",
+      "laghu_count_per_jaathi": 9,
+      "total_aksharas": 22,
+      "akshara_formula": "2 Laghu + 2 Drutam(2+2) = 2L + 4",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௨௨",
+      "total_aksharas_deva": "२२"
+    },
+    {
+      "base_thaala": "Eka",
+      "jaathi": "Tisra",
+      "anga_pattern": "Laghu",
+      "laghu_count_per_jaathi": 3,
+      "total_aksharas": 3,
+      "akshara_formula": "1 Laghu = L",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௩",
+      "total_aksharas_deva": "३"
+    },
+    {
+      "base_thaala": "Eka",
+      "jaathi": "Chatusra",
+      "anga_pattern": "Laghu",
+      "laghu_count_per_jaathi": 4,
+      "total_aksharas": 4,
+      "akshara_formula": "1 Laghu = L",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௪",
+      "total_aksharas_deva": "४"
+    },
+    {
+      "base_thaala": "Eka",
+      "jaathi": "Khanda",
+      "anga_pattern": "Laghu",
+      "laghu_count_per_jaathi": 5,
+      "total_aksharas": 5,
+      "akshara_formula": "1 Laghu = L",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௫",
+      "total_aksharas_deva": "५"
+    },
+    {
+      "base_thaala": "Eka",
+      "jaathi": "Misra",
+      "anga_pattern": "Laghu",
+      "laghu_count_per_jaathi": 7,
+      "total_aksharas": 7,
+      "akshara_formula": "1 Laghu = L",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௭",
+      "total_aksharas_deva": "७"
+    },
+    {
+      "base_thaala": "Eka",
+      "jaathi": "Sankeerna",
+      "anga_pattern": "Laghu",
+      "laghu_count_per_jaathi": 9,
+      "total_aksharas": 9,
+      "akshara_formula": "1 Laghu = L",
+      "katapayadi_name": null,
+      "katapayadi_name_practice_note": "No independently verifiable katapayadi-coined name found in cross-checked web sources for this specific thaala+jaathi; in current practice musicians refer to it descriptively (e.g. 'Chatusra Jaathi Triputa Thaalam') rather than by a coined Sanskrit name.",
+      "total_aksharas_tamil": "௯",
+      "total_aksharas_deva": "९"
+    }
+  ],
+  "base_thaala_names": {
+    "Dhruva": {
+      "english": "Dhruva",
+      "deva": "ध्रुव",
+      "tamil": "துருவ"
+    },
+    "Matya": {
+      "english": "Matya",
+      "deva": "मत्य",
+      "tamil": "மட்டிய"
+    },
+    "Rupaka": {
+      "english": "Rupaka",
+      "deva": "रूपक",
+      "tamil": "ரூபக"
+    },
+    "Jhampa": {
+      "english": "Jhampa",
+      "deva": "झम्पा",
+      "tamil": "ஜம்பை"
+    },
+    "Triputa": {
+      "english": "Triputa",
+      "deva": "त्रिपुट",
+      "tamil": "திரிபுடை"
+    },
+    "Ata": {
+      "english": "Ata",
+      "deva": "अट",
+      "tamil": "அட"
+    },
+    "Eka": {
+      "english": "Eka",
+      "deva": "एक",
+      "tamil": "ஏக"
+    }
+  },
+  "jaathi_names": {
+    "Tisra": {
+      "english": "Tisra",
+      "deva": "तिस्र",
+      "tamil": "திஸ்ர"
+    },
+    "Chatusra": {
+      "english": "Chatusra",
+      "deva": "चतुश्र",
+      "tamil": "சதுஸ்ர"
+    },
+    "Khanda": {
+      "english": "Khanda",
+      "deva": "खंड",
+      "tamil": "கண்ட"
+    },
+    "Misra": {
+      "english": "Misra",
+      "deva": "मिश्र",
+      "tamil": "மிஸ்ர"
+    },
+    "Sankeerna": {
+      "english": "Sankeerna",
+      "deva": "संकीर्ण",
+      "tamil": "சங்கீர்ண"
+    }
+  },
+  "anga_names": {
+    "Laghu": {
+      "english": "Laghu",
+      "deva": "लघु",
+      "tamil": "லகு"
+    },
+    "Drutam": {
+      "english": "Drutam",
+      "deva": "द्रुतम्",
+      "tamil": "திருதம்"
+    },
+    "Anudrutam": {
+      "english": "Anudrutam",
+      "deva": "अनुद्रुतम्",
+      "tamil": "அனுதிருதம்"
+    }
+  }
+}

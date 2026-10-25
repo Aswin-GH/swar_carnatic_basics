@@ -30,6 +30,8 @@ Each lesson stores its school-independent musical data once. Tamil and English n
 
 Comma tokens are parsed as continuation beats rather than repeated notes. With Sustain enabled by default, the audio engine creates one envelope spanning the note and all following continuations for simple tone, violin and flute. With Sustain disabled, the note releases early and the remaining continuation beats are silent.
 
+Speed subdivision runs continuously through the curriculum rows: first speed places one swara per beat, second speed combines two consecutive source lines into one tāḷa cycle, and third speed combines four. An incomplete final cycle is padded with visible rests rather than repeating its last line.
+
 The foundation contains 43 lessons: 14 Sarali, 9 Janta, 5 Melsthayi, 3 Dhatu, 5 Keezh / Mandra-sthayi and 7 canonical sapta-tāḷa alankarams. The third Dhatu sequence is explicitly tagged as extended because the Karnataka foundation source specifies two while the notation reference publishes three. The five lower-octave lessons follow the published Mandra-sthayi progression and retain dotted source notation in the canonical records; the adapter derives visual octave dots and sub-octave audio from those tokens. Alankarams carry their own anga and jāti-driven tāḷa records rather than being flattened into Ādi tāḷam. Swar — Music and More is represented as the curriculum author. Geethams remain visible as the next planned group pending their own source and teacher/pathāntaram review.
 
 ## Deployment direction

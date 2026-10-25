@@ -1,4 +1,4 @@
-import { CURRICULUM, RAGAS, SHRUTIS, TALAS, TAMIL_SWARAS } from "./content.js?v=29";
+import { CURRICULUM, RAGAS, SHRUTIS, TALAS, TAMIL_SWARAS } from "./content.js?v=30";
 
 const state = {
   sectionId: "sarali",
@@ -11,7 +11,8 @@ const state = {
   sustain: true,
   tempo: 72,
   notationPage: 0,
-  phrasesPerPage: 2,
+  cyclesPerPage: 2,
+  totalCycles: 1,
   playing: false,
   noteIndex: -1,
   timer: null,
@@ -196,12 +197,42 @@ function swaraParts(note) {
 }
 
 function swaraMarkup(note, script, noteIndex) {
+  if (note === "_") {
+    return `<span class="swara ${script} rest" data-note-index="${noteIndex}" aria-label="Rest">·</span>`;
+  }
   const { base, octave } = swaraParts(note);
   const text = script === "tamil" ? TAMIL_SWARAS[base] : base;
   const octaveClass = octave > 0 ? "upper" : octave < 0 ? "lower" : "";
   const holdClass = base === "~" ? "hold" : "";
   const displayText = base === "~" ? "," : text;
   return `<span class="swara ${script} ${octaveClass} ${holdClass}" data-note-index="${noteIndex}">${displayText}</span>`;
+}
+
+function buildSpeedCycles(lesson, tala, subdivision) {
+  const notesPerCycle = tala.beats * subdivision;
+  const source = lesson.phrases.flatMap((phrase, phraseIndex) =>
+    phrase.notes.map((note) => ({ note, phraseIndex }))
+  );
+  const cycles = [];
+  let playIndex = 0;
+
+  for (let start = 0; start < source.length; start += notesPerCycle) {
+    const actual = source.slice(start, start + notesPerCycle);
+    const cycleIndex = cycles.length;
+    const fallbackPhraseIndex = actual[actual.length - 1]?.phraseIndex ?? lesson.phrases.length - 1;
+    const entries = Array.from({ length: notesPerCycle }, (_, offset) => {
+      const item = actual[offset] ?? { note: "_", phraseIndex: fallbackPhraseIndex, padding: true };
+      return { ...item, cycleIndex, index: playIndex++ };
+    });
+    const phraseIndexes = actual.map((item) => item.phraseIndex);
+    cycles.push({
+      entries,
+      firstPhraseIndex: Math.min(...phraseIndexes),
+      lastPhraseIndex: Math.max(...phraseIndexes)
+    });
+  }
+
+  return { cycles, sequence: cycles.flatMap((cycle) => cycle.entries) };
 }
 
 function renderTalaTrack() {
@@ -227,16 +258,14 @@ function renderNotation() {
   const lesson = currentLesson();
   const tala = TALAS[state.talaId];
   const subdivision = state.speed;
-  state.phrasesPerPage = tala.beats >= 10 || (subdivision === 4 && tala.beats >= 7) ? 1 : 2;
-  const pageCount = Math.max(1, Math.ceil(lesson.phrases.length / state.phrasesPerPage));
+  const prepared = buildSpeedCycles(lesson, tala, subdivision);
+  state.playSequence = prepared.sequence;
+  state.totalCycles = prepared.cycles.length;
+  state.cyclesPerPage = tala.beats >= 10 || (subdivision === 4 && tala.beats >= 7) ? 1 : 2;
+  const pageCount = Math.max(1, Math.ceil(prepared.cycles.length / state.cyclesPerPage));
   state.notationPage = Math.min(state.notationPage, pageCount - 1);
-  const pageStart = state.notationPage * state.phrasesPerPage;
-  const visiblePhrases = lesson.phrases.slice(pageStart, pageStart + state.phrasesPerPage);
-  state.playSequence = lesson.phrases.flatMap((phrase, phraseIndex) =>
-    Array.from({ length: subdivision }, () => phrase.notes)
-      .flat()
-      .map((note) => ({ note, phraseIndex }))
-  ).map((item, index) => ({ ...item, index }));
+  const pageStart = state.notationPage * state.cyclesPerPage;
+  const visibleCycles = prepared.cycles.slice(pageStart, pageStart + state.cyclesPerPage);
 
   elements.pager.hidden = pageCount === 1;
   elements.pageLabel.textContent = `${state.notationPage + 1} of ${pageCount}`;
@@ -244,56 +273,52 @@ function renderNotation() {
   elements.pageNext.disabled = state.notationPage === pageCount - 1;
 
   elements.sheet.className = `notation-sheet speed-${subdivision} ${tala.beats > 10 ? "dense-tala" : ""}`;
-  elements.sheet.innerHTML = visiblePhrases
-    .map((phrase, visibleIndex) => {
-      const phraseIndex = pageStart + visibleIndex;
-      const expanded = state.playSequence.filter((item) => item.phraseIndex === phraseIndex);
-      const notesPerCycle = tala.beats * subdivision;
-      const cycles = [];
+  elements.sheet.innerHTML = visibleCycles
+    .map((cycle) => {
+      const cells = [];
 
-      for (let start = 0; start < expanded.length; start += notesPerCycle) {
-        const cycle = expanded.slice(start, start + notesPerCycle);
-        const cells = [];
+      for (let beat = 0; beat < tala.beats; beat += 1) {
+        const indexedNotes = cycle.entries.slice(beat * subdivision, (beat + 1) * subdivision);
+        const groupStart = tala.groups.reduce((starts, group, index) => {
+          if (index === 0) return starts;
+          starts.push(tala.groups.slice(0, index).reduce((sum, size) => sum + size, 0));
+          return starts;
+        }, []).includes(beat);
 
-        for (let beat = 0; beat < tala.beats; beat += 1) {
-          const indexedNotes = cycle.slice(beat * subdivision, (beat + 1) * subdivision);
-          const groupStart = tala.groups.reduce((starts, group, index) => {
-            if (index === 0) return starts;
-            starts.push(tala.groups.slice(0, index).reduce((sum, size) => sum + size, 0));
-            return starts;
-          }, []).includes(beat);
-
-          cells.push(`
-            <div class="beat-cell ${groupStart ? "group-start" : ""} ${beat === tala.beats - 1 ? "cycle-end" : ""}">
-              <div class="swara-line" lang="ta">${indexedNotes.map(({ note, index }) => swaraMarkup(note, "tamil", index)).join("")}</div>
-              <div class="swara-line" aria-label="English transliteration">${indexedNotes.map(({ note, index }) => swaraMarkup(note, "english", index)).join("")}</div>
-            </div>`);
-        }
-
-        if (tala.beats >= 10 || (subdivision === 4 && tala.beats >= 7)) {
-          const target = tala.beats <= 10 ? 7 : Math.ceil(tala.beats / 2);
-          let splitAfterGroups = 1;
-          let runningBeats = tala.groups[0];
-          while (
-            splitAfterGroups < tala.groups.length - 1 &&
-            runningBeats + tala.groups[splitAfterGroups] <= target
-          ) {
-            runningBeats += tala.groups[splitAfterGroups];
-            splitAfterGroups += 1;
-          }
-          const splitBeat = runningBeats;
-          const segments = [cells.slice(0, splitBeat), cells.slice(splitBeat)].filter((segment) => segment.length);
-          cycles.push(`<div class="avartanam-stack">${segments.map((segment) => `
-            <div class="avartanam" style="grid-template-columns: repeat(${segment.length}, minmax(0, 1fr))">${segment.join("")}</div>`).join("")}</div>`);
-        } else {
-          cycles.push(`<div class="avartanam" style="grid-template-columns: repeat(${tala.beats}, minmax(0, 1fr))">${cells.join("")}</div>`);
-        }
+        cells.push(`
+          <div class="beat-cell ${groupStart ? "group-start" : ""} ${beat === tala.beats - 1 ? "cycle-end" : ""}">
+            <div class="swara-line" lang="ta">${indexedNotes.map(({ note, index }) => swaraMarkup(note, "tamil", index)).join("")}</div>
+            <div class="swara-line" aria-label="English transliteration">${indexedNotes.map(({ note, index }) => swaraMarkup(note, "english", index)).join("")}</div>
+          </div>`);
       }
 
+      let notationMarkup;
+      if (tala.beats >= 10 || (subdivision === 4 && tala.beats >= 7)) {
+        const target = tala.beats <= 10 ? 7 : Math.ceil(tala.beats / 2);
+        let splitAfterGroups = 1;
+        let runningBeats = tala.groups[0];
+        while (
+          splitAfterGroups < tala.groups.length - 1 &&
+          runningBeats + tala.groups[splitAfterGroups] <= target
+        ) {
+          runningBeats += tala.groups[splitAfterGroups];
+          splitAfterGroups += 1;
+        }
+        const segments = [cells.slice(0, runningBeats), cells.slice(runningBeats)].filter((segment) => segment.length);
+        notationMarkup = `<div class="avartanam-stack">${segments.map((segment) => `
+          <div class="avartanam" style="grid-template-columns: repeat(${segment.length}, minmax(0, 1fr))">${segment.join("")}</div>`).join("")}</div>`;
+      } else {
+        notationMarkup = `<div class="avartanam" style="grid-template-columns: repeat(${tala.beats}, minmax(0, 1fr))">${cells.join("")}</div>`;
+      }
+
+      const firstLine = cycle.firstPhraseIndex + 1;
+      const lastLine = cycle.lastPhraseIndex + 1;
+      const tamilLabel = firstLine === lastLine ? `வரி ${firstLine}` : `வரிகள் ${firstLine}–${lastLine}`;
+      const englishLabel = firstLine === lastLine ? `Line ${firstLine}` : `Lines ${firstLine}–${lastLine}`;
       return `
         <div class="phrase-row">
-          <div class="phrase-label"><strong lang="ta">${phrase.tamilLabel}</strong><small>${phrase.label}</small></div>
-          <div class="phrase-content">${cycles.join("")}</div>
+          <div class="phrase-label"><strong lang="ta">${tamilLabel}</strong><small>${englishLabel}</small></div>
+          <div class="phrase-content">${notationMarkup}</div>
         </div>`;
     })
     .join("");
@@ -319,7 +344,6 @@ function renderLesson() {
     : hasLower ? "Lower sthayi" : "Upper sthayi";
   elements.tala.disabled = true;
   elements.tala.title = "Tāḷam is set by the selected lesson";
-  state.phrasesPerPage = TALAS[state.talaId].beats > 10 ? 1 : 2;
   renderTalaTrack();
   renderNotation();
   resetPlaybackDisplay();
@@ -466,7 +490,7 @@ function highlightNote(index) {
 
   const totalCycles = Math.ceil(state.playSequence.length / (tala.beats * notesPerBeat));
   const cycle = Math.floor(index / (tala.beats * notesPerBeat)) + 1;
-  const pageCount = Math.ceil(currentLesson().phrases.length / state.phrasesPerPage);
+  const pageCount = Math.ceil(state.totalCycles / state.cyclesPerPage);
   elements.cycleLabel.textContent = `Page ${state.notationPage + 1} of ${pageCount} · cycle ${cycle}/${totalCycles}`;
   elements.beatLabel.textContent = `Beat ${beatIndex + 1} of ${tala.beats}`;
   elements.progress.style.width = `${((index + 1) / state.playSequence.length) * 100}%`;
@@ -475,7 +499,7 @@ function highlightNote(index) {
 function showPlaybackPage(index) {
   const entry = state.playSequence[index];
   if (!entry) return;
-  const targetPage = Math.floor(entry.phraseIndex / state.phrasesPerPage);
+  const targetPage = Math.floor(entry.cycleIndex / state.cyclesPerPage);
   if (targetPage === state.notationPage) return;
   state.notationPage = targetPage;
   renderNotation();
@@ -488,7 +512,7 @@ function stepPlayback() {
   const stepDuration = 60 / state.tempo / state.speed;
   const current = state.playSequence[state.noteIndex];
   highlightNote(state.noteIndex);
-  if (current.note !== "~") {
+  if (current.note !== "~" && current.note !== "_") {
     let heldSteps = 0;
     while (state.playSequence[state.noteIndex + heldSteps + 1]?.note === "~") heldSteps += 1;
     const soundingDuration = state.sustain
@@ -615,7 +639,7 @@ function bindControls() {
   });
 
   elements.pageNext.addEventListener("click", () => {
-    const pageCount = Math.ceil(currentLesson().phrases.length / state.phrasesPerPage);
+    const pageCount = Math.ceil(state.totalCycles / state.cyclesPerPage);
     if (state.notationPage >= pageCount - 1) return;
     stopPlayback();
     state.notationPage += 1;

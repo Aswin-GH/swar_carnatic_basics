@@ -1,4 +1,4 @@
-import { CURRICULUM_DB } from "./curriculum-db.js?v=29";
+import { CURRICULUM_DB } from "./curriculum-db.js?v=30";
 
 const normalizeToken = (token) => {
   if (token === ",") return "~";

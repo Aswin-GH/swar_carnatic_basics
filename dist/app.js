@@ -16,6 +16,7 @@ const state = {
   playing: false,
   noteIndex: -1,
   timer: null,
+  handTimers: [],
   audioContext: null,
   masterGain: null,
   playSequence: []
@@ -43,6 +44,9 @@ const elements = {
   sheet: document.querySelector("#notation-sheet"),
   play: document.querySelector("#play-button"),
   playLabel: document.querySelector(".play-label"),
+  handCue: document.querySelector("#tala-hand-cue"),
+  handSprite: document.querySelector("#tala-hand-sprite"),
+  handLabel: document.querySelector("#tala-hand-label"),
   cycleLabel: document.querySelector("#cycle-label"),
   beatLabel: document.querySelector("#beat-label"),
   progress: document.querySelector("#progress-bar"),
@@ -473,6 +477,45 @@ function playNote(note, duration) {
   if (state.sound === "flute") playFlute(frequency, start, duration * 0.98);
 }
 
+const SPRITE_HAND_ACTIONS = new Set(["clap", "wave", "little", "ring", "middle"]);
+
+function clearHandTimers() {
+  state.handTimers.forEach((timer) => window.clearTimeout(timer));
+  state.handTimers = [];
+}
+
+function animateTalaHand(action) {
+  clearHandTimers();
+  const actionKey = action.toLowerCase();
+  const hasSprite = SPRITE_HAND_ACTIONS.has(actionKey);
+  const beatDuration = 60000 / state.tempo;
+
+  elements.handCue.hidden = false;
+  elements.handCue.dataset.action = hasSprite ? actionKey : "index";
+  elements.handCue.style.setProperty("--beat-duration", `${beatDuration}ms`);
+  elements.handLabel.textContent = action;
+  elements.handSprite.dataset.frame = "0";
+
+  elements.handCue.classList.remove("is-beating");
+  void elements.handCue.offsetWidth;
+  elements.handCue.classList.add("is-beating");
+
+  if (!hasSprite) return;
+  state.handTimers.push(window.setTimeout(() => {
+    elements.handSprite.dataset.frame = "1";
+  }, beatDuration * 0.16));
+  state.handTimers.push(window.setTimeout(() => {
+    elements.handSprite.dataset.frame = "2";
+  }, beatDuration * 0.82));
+}
+
+function hideTalaHand() {
+  clearHandTimers();
+  elements.handCue.classList.remove("is-beating");
+  elements.handCue.hidden = true;
+  elements.handSprite.dataset.frame = "0";
+}
+
 function highlightNote(index) {
   document.querySelectorAll(".swara.is-playing").forEach((node) => node.classList.remove("is-playing"));
   document.querySelectorAll(`[data-note-index="${index}"]`).forEach((node) => node.classList.add("is-playing"));
@@ -481,15 +524,17 @@ function highlightNote(index) {
   const notesPerBeat = state.speed;
   const noteInCycle = index % (tala.beats * notesPerBeat);
   const beatIndex = Math.floor(noteInCycle / notesPerBeat);
+  const beatAction = tala.actions[beatIndex];
   elements.talaTrack.querySelectorAll(".tala-beat").forEach((beat) => {
     beat.classList.toggle("is-active", Number(beat.dataset.beat) === beatIndex);
   });
+  if (noteInCycle % notesPerBeat === 0) animateTalaHand(beatAction);
 
   const totalCycles = Math.ceil(state.playSequence.length / (tala.beats * notesPerBeat));
   const cycle = Math.floor(index / (tala.beats * notesPerBeat)) + 1;
   const pageCount = Math.ceil(state.totalCycles / state.cyclesPerPage);
   elements.cycleLabel.textContent = `Page ${state.notationPage + 1} of ${pageCount} · cycle ${cycle}/${totalCycles}`;
-  elements.beatLabel.textContent = `Beat ${beatIndex + 1} of ${tala.beats}`;
+  elements.beatLabel.textContent = `Beat ${beatIndex + 1} of ${tala.beats} · ${beatAction}`;
   elements.progress.style.width = `${((index + 1) / state.playSequence.length) * 100}%`;
 }
 
@@ -534,9 +579,10 @@ function startPlayback() {
 function resetPlaybackDisplay() {
   const tala = TALAS[state.talaId];
   elements.cycleLabel.textContent = "Ready";
-  elements.beatLabel.textContent = `Beat 1 of ${tala.beats}`;
+  elements.beatLabel.textContent = `Beat 1 of ${tala.beats} · ${tala.actions[0]}`;
   elements.progress.style.width = "0%";
   document.querySelectorAll(".swara.is-playing, .tala-beat.is-active").forEach((node) => node.classList.remove("is-playing", "is-active"));
+  hideTalaHand();
 }
 
 function stopPlayback() {

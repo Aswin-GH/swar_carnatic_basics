@@ -373,96 +373,75 @@ details[open] .summary-chevron {
 
 .source-tools {
   width: 100%;
-  margin-top: 18px;
+  margin-top: 10px;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: center;
-  gap: 5px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 4px;
   flex: none;
 }
 
-.source-link { grid-column: 1 / -1; }
-
-.mini-tool {
-  min-width: 0;
-  padding: 8px 9px;
-  display: grid;
-  gap: 1px;
-  border: 1px solid var(--line);
-  border-radius: 11px;
-  color: var(--violet-deep);
-  background: rgba(255, 255, 255, 0.44);
-  text-align: left;
-  cursor: pointer;
-}
-
-.mini-tool:hover { background: var(--cream); }
-.mini-tool strong { font-size: 10px; }
-.mini-tool small { color: var(--ink-soft); font-size: 8px; white-space: nowrap; }
-
-.source-link {
-  min-width: 0;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border: 0;
-  border-radius: 12px;
-  color: var(--ink);
-  background: transparent;
-  text-align: left;
-  cursor: pointer;
-}
-
-.source-link:hover {
-  background: rgba(255, 255, 255, 0.55);
-}
-
-.source-link > span:last-child {
-  display: grid;
-  gap: 1px;
-}
-
-.source-link strong {
-  font-size: 11px;
-}
-
+.mini-tool,
+.source-link,
 .print-link {
-  min-width: 58px;
-  padding: 9px 7px;
+  min-width: 0;
+  min-height: 45px;
+  padding: 5px 3px;
   display: grid;
   place-items: center;
-  gap: 1px;
+  align-content: center;
+  gap: 0;
   border: 1px solid var(--line);
-  border-radius: 11px;
+  border-radius: 10px;
   color: var(--violet-deep);
-  background: rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.44);
+  text-align: center;
   text-decoration: none;
+  cursor: pointer;
 }
 
+.mini-tool:hover,
+.source-link:hover,
 .print-link:hover {
   border-color: rgba(166, 88, 120, 0.42);
   background: var(--cream);
 }
 
+.mini-tool strong,
+.source-link strong,
 .print-link strong {
-  font-size: 10px;
-  letter-spacing: 0.04em;
+  font-size: 9px;
+  line-height: 1.1;
 }
 
+.mini-tool small,
+.source-link small,
 .print-link small {
-  font-size: 8px;
+  color: var(--ink-soft);
+  font-size: 7px;
   font-weight: 700;
+  line-height: 1.15;
   white-space: nowrap;
 }
 
+.source-link {
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 2px;
+}
+
+.source-link > span:last-child {
+  display: grid;
+  justify-items: start;
+  gap: 0;
+}
+
 .source-logo {
-  width: 34px;
-  height: 34px;
+  width: 18px;
+  height: 18px;
   object-fit: cover;
   flex: none;
   border: 1px solid var(--line);
-  border-radius: 9px;
+  border-radius: 5px;
   background: #d9a36e;
 }
 
@@ -914,6 +893,8 @@ select {
 }
 
 .player {
+  position: relative;
+  isolation: isolate;
   margin-top: auto;
   padding: 11px;
   display: grid;
@@ -923,6 +904,94 @@ select {
   border: 1px solid rgba(115, 80, 131, 0.14);
   border-radius: 17px;
   background: linear-gradient(145deg, #eee1e8, #e8dce5);
+}
+
+.tala-hand-cue {
+  --beat-duration: 833ms;
+  position: absolute;
+  z-index: 5;
+  right: 12px;
+  bottom: calc(100% - 5px);
+  width: 106px;
+  display: grid;
+  justify-items: center;
+  gap: 1px;
+  pointer-events: none;
+  opacity: 0.74;
+  filter: drop-shadow(0 7px 10px rgba(66, 39, 68, 0.18));
+  transform-origin: 50% 100%;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.tala-hand-cue[hidden] {
+  display: none;
+}
+
+.tala-hand-cue.is-beating {
+  animation: tala-hand-float var(--beat-duration) ease-in-out both;
+}
+
+.tala-hand-sprite {
+  width: 96px;
+  height: 87px;
+  display: block;
+  overflow: hidden;
+  border-radius: 18px;
+  background-image: url("./assets/taala-hand-sprite.png");
+  background-repeat: no-repeat;
+  background-size: 288px auto;
+  background-position-x: 0;
+  clip-path: inset(2px round 17px);
+}
+
+.tala-hand-sprite[data-frame="1"] { background-position-x: -96px; }
+.tala-hand-sprite[data-frame="2"] { background-position-x: -192px; }
+
+.tala-hand-cue[data-action="clap"] .tala-hand-sprite { background-position-y: 0; }
+.tala-hand-cue[data-action="wave"] .tala-hand-sprite { background-position-y: -86.07px; }
+.tala-hand-cue[data-action="little"] .tala-hand-sprite { background-position-y: -172.13px; }
+.tala-hand-cue[data-action="ring"] .tala-hand-sprite { background-position-y: -258.2px; }
+.tala-hand-cue[data-action="middle"] .tala-hand-sprite { background-position-y: -344.26px; }
+
+.tala-hand-cue[data-action="index"] .tala-hand-sprite {
+  width: 70px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(112, 69, 109, 0.24);
+  border-radius: 18px;
+  background: rgba(255, 250, 247, 0.92);
+  clip-path: none;
+}
+
+.tala-hand-cue[data-action="index"] .tala-hand-sprite::after {
+  content: "INDEX";
+  color: var(--violet);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+}
+
+.tala-hand-label {
+  padding: 2px 7px;
+  border: 1px solid rgba(112, 69, 109, 0.16);
+  border-radius: 999px;
+  color: var(--ink);
+  background: rgba(255, 250, 247, 0.88);
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.2;
+  box-shadow: 0 2px 8px rgba(66, 39, 68, 0.08);
+}
+
+.tala-hand-cue[data-action="index"] .tala-hand-label {
+  display: none;
+}
+
+@keyframes tala-hand-float {
+  0%, 100% { transform: translateY(1px) scale(0.985); }
+  16%, 82% { transform: translateY(-2px) scale(1); }
 }
 
 .play-button {
@@ -1297,6 +1366,11 @@ dialog li {
     gap: 7px;
   }
 
+  .tala-hand-cue {
+    right: 8px;
+    transform: scale(0.88);
+  }
+
   .play-button {
     padding-inline: 13px;
   }
@@ -1347,7 +1421,7 @@ dialog li {
   }
 
   .source-link {
-    padding-block: 7px;
+    padding-block: 4px;
   }
 
   .main-stage {
@@ -1482,6 +1556,12 @@ dialog li {
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .tala-hand-cue.is-beating {
+    animation: none;
+    opacity: 0.74;
+    transform: none;
   }
 }
 

@@ -24,7 +24,7 @@ Then open `http://localhost:4173`.
 - `dist/metronome.html` — standalone 35-combination sūḷādi-tāḷa metronome with anga actions and speed subdivisions
 - `dist/glossary.html` — English-first, Tamil-alongside foundation glossary
 - `dist/data/` — researched rāga and tāḷa reference records reused from the Mēḷas project
-- `dist/assets/` — project-owned artwork
+- `dist/assets/` — project-owned artwork, including the three-frame tāḷa hand-action sprite
 - `dist/manifest.webmanifest` — install metadata and PWA icons
 - `dist/sw.js` — offline application-shell caching
 
@@ -33,6 +33,8 @@ Then open `http://localhost:4173`.
 Each lesson stores its school-independent musical data once. Tamil and English notation, speed subdivision, highlighting, playback and the printable booklet are derived from the same ordered swara sequence. Records carry author, source, rāgam, tāḷam, school-track and supported-speed metadata so future teacher views can reuse the same curriculum.
 
 Comma tokens are parsed as continuation beats rather than repeated notes. With Sustain enabled by default, the audio engine creates one envelope spanning the note and all following continuations for simple tone, violin and flute. With Sustain disabled, the note releases early and the remaining continuation beats are silent.
+
+Playback also shows a translucent three-frame hand cue once per tāḷa beat. Its timing follows the beat duration rather than the number of swaras inside that beat, with the significant middle frame held for most of the gesture. The supplied sprite covers clap, wave, little, ring and middle; unsupported Index beats use a labelled fallback instead of displaying the wrong finger.
 
 Speed subdivision runs continuously through the curriculum rows: first speed places one swara per beat, second speed combines two consecutive source lines into one tāḷa cycle, and third speed combines four. An incomplete final cycle is padded with visible rests rather than repeating its last line.
 

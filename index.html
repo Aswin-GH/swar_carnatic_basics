@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#7b436f" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="SWAR Basics" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="msapplication-TileColor" content="#7b436f" />
+    <meta
+      name="description"
+      content="A calm, Tamil-first Carnatic notation and singalong space from SWAR, music and more."
+    />
+    <title>SWAR, music and more - Carnatic basics</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./assets/app-icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/app-icon-180.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css?v=29" />
+  </head>
+  <body>
+    <div class="mobile-note" role="status">
+      <strong>SWAR, music and more - Carnatic basics works best on a tablet or computer.</strong>
+      <span>Please open it on a wider screen for the full notation canvas.</span>
+    </div>
+
+    <div class="app-shell">
+      <div class="workspace">
+        <aside class="lesson-panel" aria-label="Lesson library">
+          <a class="brand side-brand" href="#" aria-label="SWAR, music and more - Carnatic basics home">
+            <span class="brand-mark" aria-hidden="true">ஸ</span>
+            <span>
+              <strong>SWAR, music and more</strong>
+              <small>Carnatic basics</small>
+            </span>
+          </a>
+
+          <div class="welcome-card">
+            <div>
+              <span class="eyebrow">Welcome back</span>
+              <h1>What shall we sing today?</h1>
+            </div>
+            <img
+              src="./assets/srishti-swara.png"
+              alt="Illustration of Srishti keeping tala beside a tanpura"
+            />
+          </div>
+
+          <div class="library-heading">
+            <div>
+              <span class="eyebrow">Learning path</span>
+              <h2>Foundation</h2>
+            </div>
+            <span class="lesson-count" id="lesson-count">5 lessons</span>
+          </div>
+
+          <div class="lesson-library" id="lesson-library"></div>
+
+          <div class="source-tools">
+            <button class="source-link" id="source-button" type="button">
+              <img class="source-logo" src="./assets/swar-author.png" alt="" />
+              <span><strong>Curriculum by Swar</strong><small>Sources and teaching choices</small></span>
+            </button>
+            <a class="print-link" href="./print.html" target="_blank" aria-label="Open printable curriculum booklet for sections 01 to 06">
+              <strong>01–06</strong><small>Print PDF</small>
+            </a>
+          </div>
+        </aside>
+
+        <main class="main-stage">
+          <section class="control-bar" aria-label="Musical controls">
+            <label class="raga-field">
+              <span>Rāgam</span>
+              <select id="raga-select"></select>
+            </label>
+            <label class="tala-field">
+              <span>Tāḷam</span>
+              <select id="tala-select"></select>
+            </label>
+            <label class="speed-field">
+              <span>Speed</span>
+              <select id="speed-select">
+                <option value="1">1st · one swara per beat</option>
+                <option value="2">2nd · two swaras per beat</option>
+                <option value="4">3rd · four swaras per beat</option>
+              </select>
+            </label>
+            <label class="shruti-field">
+              <span>Śruti</span>
+              <select id="shruti-select"></select>
+            </label>
+          </section>
+
+          <section class="lesson-heading">
+            <div>
+              <div class="lesson-meta">
+                <span id="section-name">Sarali varisai</span>
+                <span aria-hidden="true">·</span>
+                <span id="lesson-number">Lesson 01</span>
+              </div>
+              <h2 id="lesson-title">Meet every swara</h2>
+              <p id="lesson-description">A steady journey up and down the octave.</p>
+            </div>
+            <div class="lesson-scale" id="lesson-scale">S R₁ G₃ M₁ P D₁ N₃ S</div>
+          </section>
+
+          <section class="notation-card" aria-label="Carnatic notation canvas">
+            <div class="canvas-header">
+              <div>
+                <span class="eyebrow">Notation canvas</span>
+                <h3 id="tamil-title" lang="ta">ஒவ்வொரு ஸ்வரத்தையும் அறிந்துகொள்</h3>
+                <p id="english-subtitle">Meet every swara</p>
+              </div>
+              <div class="canvas-actions">
+                <div class="canvas-key">
+                  <span><i class="key-dot key-dot-high"></i><span id="octave-key-label">Upper sthayi</span></span>
+                  <span><i class="key-bar"></i>Tāḷa division</span>
+                </div>
+                <div class="notation-pager" id="notation-pager" aria-label="Notation pages">
+                  <button id="page-back" type="button" aria-label="Previous notation page">←</button>
+                  <span id="page-label">1 of 1</span>
+                  <button id="page-next" type="button" aria-label="Next notation page">→</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="tala-track" id="tala-track" aria-label="Tala beat tracker"></div>
+            <div class="notation-scroll">
+              <div class="notation-sheet" id="notation-sheet"></div>
+            </div>
+          </section>
+
+          <div class="listening-tip">
+            <span class="tip-icon" aria-hidden="true">♪</span>
+            <p><strong>Listen once.</strong> Join gently when the next cycle begins.</p>
+          </div>
+
+          <section class="player" aria-label="Singalong player">
+            <button class="play-button" id="play-button" type="button">
+              <span class="play-symbol" aria-hidden="true">▶</span>
+              <span class="play-label">Play all &amp; loop</span>
+            </button>
+
+            <div class="timeline">
+              <div class="timeline-labels">
+                <span id="cycle-label">Ready</span>
+                <strong id="beat-label">Beat 1 of 8</strong>
+              </div>
+              <div class="progress-track" aria-hidden="true"><span id="progress-bar"></span></div>
+            </div>
+
+            <label class="player-field sound-field">
+              <span>Sound</span>
+              <select id="sound-select">
+                <option value="sine">Simple tone</option>
+                <option value="violin" selected>Violin</option>
+                <option value="flute">Flute</option>
+              </select>
+            </label>
+
+            <label class="player-field tempo-field">
+              <span>Tempo</span>
+              <div class="tempo-control">
+                <button type="button" id="tempo-down" aria-label="Decrease tempo">−</button>
+                <output id="tempo-output">72</output>
+                <button type="button" id="tempo-up" aria-label="Increase tempo">+</button>
+              </div>
+            </label>
+
+            <label class="switch-control" id="sustain-control" title="Continue a note smoothly across comma-marked hold beats">
+              <input id="sustain-toggle" type="checkbox" checked />
+              <span class="switch-ui" aria-hidden="true"></span>
+              <span>Sustain</span>
+            </label>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <dialog id="source-dialog">
+      <div class="dialog-header">
+        <div>
+          <span class="eyebrow">Content notes</span>
+          <h2>About this foundation</h2>
+        </div>
+        <button id="dialog-close" type="button" aria-label="Close">×</button>
+      </div>
+      <div class="author-profile">
+        <img src="./assets/swar-author.png" alt="Swar Music and More emblem" />
+        <div>
+          <span class="eyebrow">Curriculum author</span>
+          <strong>Swar</strong>
+          <small>Music and More</small>
+        </div>
+      </div>
+      <p>
+        The learning path follows the shared foundation found across Tamil and Karnataka Carnatic
+        teaching, while keeping room for a teacher's preferred order and pathāntaram.
+      </p>
+      <ul>
+        <li>The foundation contains 14 Sarali, 9 Janta, 5 Melsthayi, 2 core Dhatu varisais plus one extended sequence, 5 Keezh / Mandra-sthayi varisais and the 7 canonical sapta-tāḷa alankarams.</li>
+        <li>Tamil Nadu Grade 1 specifies Sarali, Janta and Melsthayi in three speeds.</li>
+        <li>Grade 2 introduces Dhattu, Keezh-sthayi, alankarams and geethams.</li>
+        <li>Māyāmāḷavagowla and Ādi tāḷam are the initial defaults, not permanent restrictions.</li>
+        <li>The playable sequences follow the published karnATik beginner notation; Tamil presentation and audio are derived from the same swara records. Commas are continuation beats: Sustain holds one sound across them, while Sustain off releases early into silence.</li>
+        <li>A teacher's pathāntaram remains authoritative where a sequence or pronunciation differs.</li>
+      </ul>
+      <div class="dialog-links">
+        <a href="https://www.tnjjmfau.in/images/syllabus/Off_Campus/Grades/Vocal.pdf" target="_blank" rel="noreferrer">Tamil Nadu grade syllabus</a>
+        <a href="https://musicuniversity.ac.in/?page_id=493" target="_blank" rel="noreferrer">Karnataka special examinations</a>
+        <a href="https://wmc.net.in/Exam_Registration_Form/examination-form.html" target="_blank" rel="noreferrer">Karnataka foundation counts</a>
+        <a href="https://www.karnatik.com/beginners.pdf" target="_blank" rel="noreferrer">Beginner notation reference</a>
+      </div>
+    </dialog>
+
+    <script type="module" src="./app.js?v=29"></script>
+  </body>
+</html>

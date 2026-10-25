@@ -1,0 +1,37 @@
+{
+  "name": "SWAR, music and more - Carnatic basics",
+  "short_name": "SWAR Basics",
+  "id": "./",
+  "description": "A calm, Tamil-first Carnatic notation and singalong canvas.",
+  "lang": "en-IN",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "orientation": "landscape",
+  "background_color": "#f4ecef",
+  "theme_color": "#7b436f",
+  "categories": ["education", "music"],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "./assets/app-icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./assets/app-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./assets/app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

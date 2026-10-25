@@ -1,4 +1,4 @@
-import { CURRICULUM, RAGAS, SHRUTIS, TALAS, TAMIL_SWARAS } from "./content.js?v=32";
+import { CURRICULUM, RAGAS, SHRUTIS, TALAS, TAMIL_SWARAS } from "./content.js?v=33";
 
 const state = {
   sectionId: "sarali",

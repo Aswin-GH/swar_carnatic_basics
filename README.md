@@ -34,7 +34,7 @@ Each lesson stores its school-independent musical data once. Tamil and English n
 
 Comma tokens are parsed as continuation beats rather than repeated notes. With Sustain enabled by default, the audio engine creates one envelope spanning the note and all following continuations for simple tone, violin and flute. With Sustain disabled, the note releases early and the remaining continuation beats are silent.
 
-Playback also shows a translucent three-frame hand cue once per tāḷa beat. Its timing follows the beat duration rather than the number of swaras inside that beat, with the significant middle frame held for most of the gesture. The supplied sprite covers clap, wave, little, ring and middle; unsupported Index beats use a labelled fallback instead of displaying the wrong finger.
+Playback also shows a translucent three-frame hand cue once per tāḷa beat. Its timing follows the beat duration rather than the number of swaras inside that beat, with the significant middle frame held for most of the gesture. The supplied sprite covers clap, wave, little, ring, middle and index.
 
 Speed subdivision runs continuously through the curriculum rows: first speed places one swara per beat, second speed combines two consecutive source lines into one tāḷa cycle, and third speed combines four. An incomplete final cycle is padded with visible rests rather than repeating its last line.
 

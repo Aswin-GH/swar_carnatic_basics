@@ -477,7 +477,7 @@ function playNote(note, duration) {
   if (state.sound === "flute") playFlute(frequency, start, duration * 0.98);
 }
 
-const SPRITE_HAND_ACTIONS = new Set(["clap", "wave", "little", "ring", "middle"]);
+const SPRITE_HAND_ACTIONS = new Set(["clap", "wave", "little", "ring", "middle", "index"]);
 
 function clearHandTimers() {
   state.handTimers.forEach((timer) => window.clearTimeout(timer));

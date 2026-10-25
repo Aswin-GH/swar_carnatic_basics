@@ -938,7 +938,7 @@ select {
   display: block;
   overflow: hidden;
   border-radius: 18px;
-  background-image: url("./assets/taala-hand-sprite.png");
+  background-image: url("./assets/taala-hand-sprite.png?v=35");
   background-repeat: no-repeat;
   background-size: 288px auto;
   background-position-x: 0;
@@ -949,29 +949,11 @@ select {
 .tala-hand-sprite[data-frame="2"] { background-position-x: -192px; }
 
 .tala-hand-cue[data-action="clap"] .tala-hand-sprite { background-position-y: 0; }
-.tala-hand-cue[data-action="wave"] .tala-hand-sprite { background-position-y: -86.07px; }
-.tala-hand-cue[data-action="little"] .tala-hand-sprite { background-position-y: -172.13px; }
-.tala-hand-cue[data-action="ring"] .tala-hand-sprite { background-position-y: -258.2px; }
-.tala-hand-cue[data-action="middle"] .tala-hand-sprite { background-position-y: -344.26px; }
-
-.tala-hand-cue[data-action="index"] .tala-hand-sprite {
-  width: 70px;
-  height: 52px;
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(112, 69, 109, 0.24);
-  border-radius: 18px;
-  background: rgba(255, 250, 247, 0.92);
-  clip-path: none;
-}
-
-.tala-hand-cue[data-action="index"] .tala-hand-sprite::after {
-  content: "INDEX";
-  color: var(--violet);
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 0.09em;
-}
+.tala-hand-cue[data-action="wave"] .tala-hand-sprite { background-position-y: -85.77px; }
+.tala-hand-cue[data-action="little"] .tala-hand-sprite { background-position-y: -171.54px; }
+.tala-hand-cue[data-action="ring"] .tala-hand-sprite { background-position-y: -257.31px; }
+.tala-hand-cue[data-action="middle"] .tala-hand-sprite { background-position-y: -343.08px; }
+.tala-hand-cue[data-action="index"] .tala-hand-sprite { background-position-y: -428.85px; }
 
 .tala-hand-label {
   padding: 2px 7px;
@@ -983,10 +965,6 @@ select {
   font-weight: 700;
   line-height: 1.2;
   box-shadow: 0 2px 8px rgba(66, 39, 68, 0.08);
-}
-
-.tala-hand-cue[data-action="index"] .tala-hand-label {
-  display: none;
 }
 
 @keyframes tala-hand-float {

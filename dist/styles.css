@@ -934,15 +934,17 @@ select {
 
 .tala-hand-sprite {
   width: 96px;
-  height: 87px;
+  /* The source grid is 408 px high per pose (85.77 px at this scale).
+     Stay inside that cell so its guide lines never enter the crop. */
+  height: 85px;
   display: block;
   overflow: hidden;
   border-radius: 18px;
-  background-image: url("./assets/taala-hand-sprite.png?v=35");
+  background-image: url("./assets/taala-hand-sprite.png?v=36");
   background-repeat: no-repeat;
   background-size: 288px auto;
   background-position-x: 0;
-  clip-path: inset(2px round 17px);
+  clip-path: inset(3px round 16px);
 }
 
 .tala-hand-sprite[data-frame="1"] { background-position-x: -96px; }
